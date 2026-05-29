@@ -1,0 +1,54 @@
+{
+  "document_id": "ES-TRANS-2024-002",
+  "title": "Transmission Shift Logic - Gear Range Selection",
+  "revision": "B",
+  "subsystem": "Transmission Control Module",
+  "asil": "ASIL-B",
+  "effective_date": "2024-02-01",
+  "gear_ranges": [
+    {"range": "P", "code": "0x00", "description": "Park - transmission locked", "allowed_from": ["R", "N"]},
+    {"range": "R", "code": "0x01", "description": "Reverse gear engaged", "allowed_from": ["P", "N"]},
+    {"range": "N", "code": "0x02", "description": "Neutral - disengaged", "allowed_from": ["P", "R", "D"]},
+    {"range": "D", "code": "0x03", "description": "Drive - automatic selection", "allowed_from": ["N"]}
+  ],
+  "safety_interlocks": [
+    {"shift": "Any to R", "precondition": "Vehicle speed < 5 mph AND brake applied", "failure_dtc": "P0700"},
+    {"shift": "Any to P", "precondition": "Vehicle speed < 3 mph", "failure_dtc": "P0700"},
+    {"shift": "N to D", "precondition": "Brake pedal applied", "failure_dtc": "P0705"},
+    {"shift": "P to R", "precondition": "Brake pedal applied AND shift button pressed", "failure_dtc": null},
+    {"shift": "Any", "precondition": "Engine RPM within calibration range", "failure_dtc": "P0730"}
+  ],
+  "timing_constraints": {
+    "solenoid_response_ms": 50,
+    "gear_engagement_ms": 300,
+    "tc_lockup_ms": 500,
+    "total_shift_ms": 1200,
+    "shift_quality_g": 0.3
+  },
+  "upshift_schedule": {
+    "mode": "normal",
+    "shifts": [
+      {"from": 1, "to": 2, "throttle_25": 15, "throttle_50": 22, "throttle_75": 30, "throttle_100": 42},
+      {"from": 2, "to": 3, "throttle_25": 25, "throttle_50": 32, "throttle_75": 42, "throttle_100": 55},
+      {"from": 3, "to": 4, "throttle_25": 35, "throttle_50": 42, "throttle_75": 52, "throttle_100": 65},
+      {"from": 4, "to": 5, "throttle_25": 42, "throttle_50": 50, "throttle_75": 60, "throttle_100": 75},
+      {"from": 5, "to": 6, "throttle_25": 48, "throttle_50": 55, "throttle_75": 65, "throttle_100": 80},
+      {"from": 6, "to": 7, "throttle_25": 52, "throttle_50": 60, "throttle_75": 72, "throttle_100": 90},
+      {"from": 7, "to": 8, "throttle_25": 58, "throttle_50": 65, "throttle_75": 78, "throttle_100": 100},
+      {"from": 8, "to": 9, "throttle_25": 62, "throttle_50": 70, "throttle_75": 85, "throttle_100": 110},
+      {"from": 9, "to": 10, "throttle_25": 68, "throttle_50": 75, "throttle_75": 90, "throttle_100": 120}
+    ]
+  },
+  "signals": [
+    {"name": "ShiftLeverPosition", "message_id": "0x211", "description": "PRNDL sensor reading"},
+    {"name": "CurrentGear", "message_id": "0x210", "description": "Active gear 0-10"},
+    {"name": "TargetGear", "message_id": "0x212", "description": "Commanded gear"},
+    {"name": "ShiftInProgress", "message_id": "0x213", "description": "Shift active flag"},
+    {"name": "TorqueConverterState", "message_id": "0x214", "description": "TC lockup status"},
+    {"name": "ShiftSolenoidCmd", "message_id": "0x220", "description": "Solenoid pack command"},
+    {"name": "ShiftQuality", "message_id": "0x215", "description": "Last shift quality metric"}
+  ],
+  "diagrams": ["diagrams/shift_logic_flow.png"],
+  "tables": 8,
+  "figures": 1
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automotive Spec Data Lake — Demo Flow</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f5f7fa;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0d4f3c 100%);
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem 1.75rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    }
+    header h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    header p {
+      margin-top: .5rem;
+      font-size: .95rem;
+      color: #94a3b8;
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1400px;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    #flowchart {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .mermaid svg { margin: 0 auto; display: block; }
+
+    .legend {
+      width: 100%;
+      max-width: 1400px;
+      padding: 0 1rem 2.5rem;
+    }
+    .legend-inner {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+    .legend-title {
+      font-weight: 600;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: #64748b;
+      margin-right: .5rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .85rem;
+      color: #334155;
+    }
+    .legend-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    footer {
+      width: 100%;
+      text-align: center;
+      padding: 1rem;
+      font-size: .8rem;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Automotive Spec Data Lake &mdash; Demo Flow</h1>
+    <p>Continuous ingestion of unstructured specs into structured, queryable data</p>
+  </header>
+
+  <main>
+    <div id="flowchart">
+      <pre class="mermaid">
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor':      '#dbeafe',
+    'primaryTextColor':  '#1e293b',
+    'primaryBorderColor':'#3b82f6',
+    'secondaryColor':    '#f0fdf4',
+    'tertiaryColor':     '#fef3c7',
+    'lineColor':         '#64748b',
+    'fontSize':          '14px'
+  },
+  'flowchart': {
+    'useMaxWidth': false,
+    'htmlLabels': false,
+    'padding': 20,
+    'nodeSpacing': 30,
+    'rankSpacing': 40
+  }
+}}%%
+
+flowchart TD
+  JIRA[Jira Ticket Created]
+  UPLOAD[File Upload via Dashboard]
+  TRIGGER{Devin Triggered}
+
+  JIRA --> TRIGGER
+  UPLOAD --> TRIGGER
+
+  TRIGGER --> ORCH[Orchestrator Session]
+
+  subgraph CHILDREN [Parallel Child Sessions]
+    direction LR
+    C1[Parse PDF Specs]
+    C2[Parse Excel Reqs]
+    C3[Parse Word Catalogs]
+  end
+
+  ORCH --> CHILDREN
+
+  subgraph PIPELINE [Pipeline Stages]
+    direction TB
+    S1[1. Ingest]
+    S2[2. Extract]
+    S3[3. Classify]
+    S4[4. Structure]
+    S5[5. Validate]
+    S6[6. Integrate]
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6
+  end
+
+  CHILDREN --> PIPELINE
+
+  subgraph DATALAKE [Structured Data Lake]
+    direction LR
+    DL1[Signals]
+    DL2[States]
+    DL3[Requirements]
+    DL4[DTCs]
+    DL5[Parameters]
+  end
+
+  PIPELINE --> DATALAKE
+
+  DASHBOARD[Live Dashboard]
+  STORIES[Jira User Stories]
+
+  DATALAKE --> DASHBOARD
+  DATALAKE --> STORIES
+  STORIES --> JIRA
+      </pre>
+    </div>
+  </main>
+
+  <section class="legend">
+    <div class="legend-inner">
+      <span class="legend-title">Legend</span>
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:#dbeafe; border:1px solid #3b82f6"></span>
+        Trigger / Orchestration
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:#f0fdf4; border:1px solid #22c55e"></span>
+        Child Sessions (parallel)
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:#fef3c7; border:1px solid #f59e0b"></span>
+        Pipeline Stages
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:#ede9fe; border:1px solid #8b5cf6"></span>
+        Data Lake Categories
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:#fce7f3; border:1px solid #ec4899"></span>
+        Outputs (Dashboard + Jira)
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Automotive Spec Data Lake — Continuous ingestion powered by Devin
+  </footer>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: 'loose',
+      flowchart: {
+        htmlLabels: false,
+        curve: 'basis',
+        useMaxWidth: false
+      }
+    });
+  </script>
+</body>
+</html>

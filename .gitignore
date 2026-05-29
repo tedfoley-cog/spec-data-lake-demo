@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+*.swp
+*.swo
+.DS_Store
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+data_lake/metadata/jira_activity.json
+source_documents/uploads/

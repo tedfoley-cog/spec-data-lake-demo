@@ -1,0 +1,96 @@
+{
+  "document_id": "ES-CAN-2024-003",
+  "title": "CAN Signal Catalog - Vehicle Network",
+  "revision": "A",
+  "bus_config": {
+    "hs_can": {"speed": "500 kbps", "protocol": "CAN 2.0B"},
+    "ms_can": {"speed": "125 kbps", "protocol": "CAN 2.0B"}
+  },
+  "messages": [
+    {
+      "message_id": "0x120",
+      "name": "PCM_Engine_Status",
+      "dlc": 8,
+      "cycle_time_ms": 10,
+      "bus": "HS-CAN",
+      "sender": "PCM",
+      "signals": [
+        {"name": "EngineRPM", "start_bit": 0, "length": 16, "scale": 0.25, "offset": 0, "min": 0, "max": 8000, "unit": "rpm"},
+        {"name": "EngineTorque", "start_bit": 16, "length": 16, "scale": 0.1, "offset": -500, "min": -500, "max": 1000, "unit": "Nm"},
+        {"name": "ThrottlePosition", "start_bit": 32, "length": 8, "scale": 0.4, "offset": 0, "min": 0, "max": 100, "unit": "%"},
+        {"name": "EngineTemp", "start_bit": 40, "length": 8, "scale": 1, "offset": -40, "min": -40, "max": 215, "unit": "C"}
+      ]
+    },
+    {
+      "message_id": "0x121",
+      "name": "PCM_Vehicle_Speed",
+      "dlc": 8,
+      "cycle_time_ms": 20,
+      "bus": "HS-CAN",
+      "sender": "PCM",
+      "signals": [
+        {"name": "VehicleSpeed", "start_bit": 0, "length": 16, "scale": 0.01, "offset": 0, "min": 0, "max": 655, "unit": "mph"},
+        {"name": "OutputShaftSpeed", "start_bit": 16, "length": 16, "scale": 0.25, "offset": 0, "min": 0, "max": 16000, "unit": "rpm"}
+      ]
+    },
+    {
+      "message_id": "0x130",
+      "name": "PCM_Power_Mode",
+      "dlc": 4,
+      "cycle_time_ms": 100,
+      "bus": "HS-CAN",
+      "sender": "PCM",
+      "signals": [
+        {"name": "PowerModeState", "start_bit": 0, "length": 8, "scale": 1, "offset": 0, "min": 0, "max": 5, "unit": "enum"},
+        {"name": "StarterRelay", "start_bit": 8, "length": 1, "scale": 1, "offset": 0, "min": 0, "max": 1, "unit": "bool"},
+        {"name": "FuelPumpRelay", "start_bit": 9, "length": 1, "scale": 1, "offset": 0, "min": 0, "max": 1, "unit": "bool"},
+        {"name": "IgnitionCoilEn", "start_bit": 10, "length": 1, "scale": 1, "offset": 0, "min": 0, "max": 1, "unit": "bool"}
+      ]
+    },
+    {
+      "message_id": "0x210",
+      "name": "TCM_Gear_Status",
+      "dlc": 8,
+      "cycle_time_ms": 50,
+      "bus": "HS-CAN",
+      "sender": "TCM",
+      "signals": [
+        {"name": "CurrentGear", "start_bit": 0, "length": 4, "scale": 1, "offset": 0, "min": 0, "max": 10, "unit": "gear"},
+        {"name": "TransRange", "start_bit": 4, "length": 4, "scale": 1, "offset": 0, "min": 0, "max": 3, "unit": "enum"},
+        {"name": "ShiftInProgress", "start_bit": 8, "length": 1, "scale": 1, "offset": 0, "min": 0, "max": 1, "unit": "bool"},
+        {"name": "TorqueConverterLocked", "start_bit": 9, "length": 1, "scale": 1, "offset": 0, "min": 0, "max": 1, "unit": "bool"},
+        {"name": "TransFluidTemp", "start_bit": 16, "length": 8, "scale": 1, "offset": -40, "min": -40, "max": 215, "unit": "C"}
+      ]
+    },
+    {
+      "message_id": "0x310",
+      "name": "ABS_Wheel_Speed",
+      "dlc": 8,
+      "cycle_time_ms": 10,
+      "bus": "HS-CAN",
+      "sender": "ABS",
+      "signals": [
+        {"name": "WheelSpeed_FL", "start_bit": 0, "length": 16, "scale": 0.01, "offset": 0, "min": 0, "max": 655, "unit": "mph"},
+        {"name": "WheelSpeed_FR", "start_bit": 16, "length": 16, "scale": 0.01, "offset": 0, "min": 0, "max": 655, "unit": "mph"},
+        {"name": "WheelSpeed_RL", "start_bit": 32, "length": 16, "scale": 0.01, "offset": 0, "min": 0, "max": 655, "unit": "mph"},
+        {"name": "WheelSpeed_RR", "start_bit": 48, "length": 16, "scale": 0.01, "offset": 0, "min": 0, "max": 655, "unit": "mph"}
+      ]
+    },
+    {
+      "message_id": "0x510",
+      "name": "BCM_Ignition",
+      "dlc": 4,
+      "cycle_time_ms": 100,
+      "bus": "HS-CAN",
+      "sender": "BCM",
+      "signals": [
+        {"name": "IgnitionSwitch", "start_bit": 0, "length": 3, "scale": 1, "offset": 0, "min": 0, "max": 4, "unit": "enum"},
+        {"name": "StartRequest", "start_bit": 3, "length": 1, "scale": 1, "offset": 0, "min": 0, "max": 1, "unit": "bool"},
+        {"name": "BrakePedal", "start_bit": 4, "length": 1, "scale": 1, "offset": 0, "min": 0, "max": 1, "unit": "bool"}
+      ]
+    }
+  ],
+  "diagrams": ["diagrams/can_bus_topology.png"],
+  "total_messages": 6,
+  "total_signals": 28
+}

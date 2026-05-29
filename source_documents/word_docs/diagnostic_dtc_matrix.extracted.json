@@ -1,0 +1,129 @@
+{
+  "document_id": "ES-DTC-2024-004",
+  "title": "Diagnostic Trouble Code Matrix",
+  "revision": "B",
+  "dtcs": [
+    {
+      "code": "P0335",
+      "description": "Crankshaft Position Sensor - No Signal",
+      "category": "powertrain",
+      "enable_condition": "Engine running, RPM signal absent for 5s",
+      "fault_action": "Set MIL, limit engine torque to 80%",
+      "debounce": "3 consecutive drive cycles",
+      "mil": true,
+      "related_requirement": "REQ-PM-001",
+      "related_signal": "EngineRPM"
+    },
+    {
+      "code": "P0562",
+      "description": "System Voltage Low",
+      "category": "electrical",
+      "enable_condition": "Any power mode, battery voltage < 9.0V for 30s",
+      "fault_action": "Set MIL, disable non-essential loads",
+      "debounce": "Continuous 30s",
+      "mil": true,
+      "related_requirement": "REQ-PM-002",
+      "related_signal": "BatteryVoltage"
+    },
+    {
+      "code": "P0563",
+      "description": "System Voltage High",
+      "category": "electrical",
+      "enable_condition": "Any power mode, battery voltage > 16.0V for 10s",
+      "fault_action": "Set MIL, reduce alternator field duty",
+      "debounce": "Continuous 10s",
+      "mil": true,
+      "related_requirement": "REQ-PM-003",
+      "related_signal": "BatteryVoltage"
+    },
+    {
+      "code": "P0602",
+      "description": "PCM Calibration Error",
+      "category": "powertrain",
+      "enable_condition": "Power-on self-test, checksum mismatch",
+      "fault_action": "Set MIL, enter limp mode",
+      "debounce": "Immediate",
+      "mil": true,
+      "related_requirement": "REQ-PM-004",
+      "related_signal": "PowerModeState"
+    },
+    {
+      "code": "P0700",
+      "description": "Transmission Control System Malfunction",
+      "category": "transmission",
+      "enable_condition": "Shift rejected, precondition failure",
+      "fault_action": "Set MIL, inhibit further shift attempts",
+      "debounce": "2 consecutive failures",
+      "mil": true,
+      "related_requirement": "REQ-TR-009",
+      "related_signal": "CurrentGear"
+    },
+    {
+      "code": "P0705",
+      "description": "Transmission Range Sensor Circuit",
+      "category": "transmission",
+      "enable_condition": "RUN mode, range sensor conflict with gear state",
+      "fault_action": "Set MIL, default to Park interlock",
+      "debounce": "500ms continuous",
+      "mil": true,
+      "related_requirement": "REQ-TR-010",
+      "related_signal": "TransRange"
+    },
+    {
+      "code": "P0730",
+      "description": "Incorrect Gear Ratio",
+      "category": "transmission",
+      "enable_condition": "Drive mode, actual ratio deviates >15% from commanded",
+      "fault_action": "Set MIL, limit to 3rd gear max",
+      "debounce": "3 consecutive shifts",
+      "mil": true,
+      "related_requirement": "REQ-TR-011",
+      "related_signal": "CurrentGear"
+    },
+    {
+      "code": "U0100",
+      "description": "Lost Communication with ECM/PCM",
+      "category": "network",
+      "enable_condition": "RUN or RUN+ENGINE, no CAN message for 1s",
+      "fault_action": "Set MIL, use last known values with timeout",
+      "debounce": "Continuous 1s",
+      "mil": true,
+      "related_requirement": "REQ-NET-001",
+      "related_signal": "EngineRPM"
+    },
+    {
+      "code": "U0073",
+      "description": "Control Module Communication Bus Off",
+      "category": "network",
+      "enable_condition": "CAN bus error counter > 255",
+      "fault_action": "Set MIL, attempt bus recovery",
+      "debounce": "Immediate",
+      "mil": true,
+      "related_requirement": "REQ-NET-002",
+      "related_signal": "PowerModeState"
+    },
+    {
+      "code": "P1000",
+      "description": "OBD-II Monitor Testing Not Complete",
+      "category": "emissions",
+      "enable_condition": "Key cycle after DTC clear, monitors incomplete",
+      "fault_action": "No MIL, informational only",
+      "debounce": "N/A",
+      "mil": false,
+      "related_requirement": "REQ-EM-001",
+      "related_signal": "PowerModeState"
+    }
+  ],
+  "cross_references": [
+    {"dtc": "P0335", "signal": "EngineRPM", "requirement": "REQ-PM-001"},
+    {"dtc": "P0562", "signal": "BatteryVoltage", "requirement": "REQ-PM-002"},
+    {"dtc": "P0563", "signal": "BatteryVoltage", "requirement": "REQ-PM-003"},
+    {"dtc": "P0602", "signal": "PowerModeState", "requirement": "REQ-PM-004"},
+    {"dtc": "P0700", "signal": "CurrentGear", "requirement": "REQ-TR-009"},
+    {"dtc": "P0705", "signal": "TransRange", "requirement": "REQ-TR-010"},
+    {"dtc": "P0730", "signal": "CurrentGear", "requirement": "REQ-TR-011"},
+    {"dtc": "U0100", "signal": "EngineRPM", "requirement": "REQ-NET-001"},
+    {"dtc": "U0073", "signal": "PowerModeState", "requirement": "REQ-NET-002"},
+    {"dtc": "P1000", "signal": "PowerModeState", "requirement": "REQ-EM-001"}
+  ]
+}
