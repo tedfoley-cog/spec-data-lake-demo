@@ -174,6 +174,8 @@ dropZone.addEventListener("drop", (e) => {
 });
 fileInput.addEventListener("change", () => { if (fileInput.files.length) uploadFile(fileInput.files[0]); });
 
+let uploadTick = null;
+
 function setStatus(cls, msg) {
   uploadStatus.style.display = "flex";
   uploadStatus.className = "upload-status " + cls;
@@ -184,8 +186,9 @@ async function uploadFile(file) {
   setStatus("uploading", `Ingesting ${file.name} …`);
   // animate the active-pipeline stepper while the request runs
   const el = document.getElementById("activePipeline");
+  if (uploadTick) clearInterval(uploadTick);
   let step = 0;
-  const tick = setInterval(() => {
+  uploadTick = setInterval(() => {
     el.innerHTML = `<div class="pipeline-job">
       <div class="pipeline-job-header"><span class="job-file">${esc(file.name)}</span>
       <span class="badge ${STAGES[step]}">${STAGES[step]}</span></div>${stepper(STAGES[step])}</div>`;
@@ -197,7 +200,8 @@ async function uploadFile(file) {
   try {
     const resp = await fetch("/upload", { method: "POST", body: fd });
     const data = await resp.json();
-    clearInterval(tick);
+    clearInterval(uploadTick);
+    uploadTick = null;
     if (data.status === "success") {
       const cats = (data.job.categories || []).join(", ") || "no new categories";
       setStatus("success", `${file.name} integrated into the data lake — ${cats}.`);
@@ -205,7 +209,8 @@ async function uploadFile(file) {
       setStatus("error", `Error: ${data.error || "processing failed"}`);
     }
   } catch (err) {
-    clearInterval(tick);
+    clearInterval(uploadTick);
+    uploadTick = null;
     setStatus("error", `Upload failed: ${err.message}`);
   }
   await refresh();
