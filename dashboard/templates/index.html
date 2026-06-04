@@ -3,141 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spec Data Lake — Continuous Ingestion</title>
+  <title>Spec Data Lake</title>
   <link rel="icon" href="/static/ford-logo.svg" />
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <!-- Top bar -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <img class="brand-logo" src="/static/ford-logo.svg" alt="Ford" />
-        <span class="brand-divider"></span>
-        <span class="brand-text">
-          <span class="brand-title">Spec Data Lake</span>
-          <span class="brand-sub">Continuous Ingestion</span>
-        </span>
-      </div>
-      <div class="topbar-spacer"></div>
-      <span class="live-pill"><span class="live-dot"></span> Live</span>
+  <!-- Sticky white nav (Ford pattern: white bg, logo left, status right) -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <img class="nav-logo" src="/static/ford-logo.svg" alt="Ford" />
+      <span class="nav-sep"></span>
+      <span class="nav-title">Spec Data Lake</span>
+      <span class="nav-spacer"></span>
+      <span class="nav-status"><span class="pulse"></span> Continuous</span>
     </div>
-  </header>
+  </nav>
 
-  <!-- Page intro -->
-  <div class="page-head">
-    <h1>Engineering Specification Data Lake</h1>
-    <p>
-      Unstructured engineering documents &mdash; PDFs with state-machine diagrams,
-      Excel requirement matrices, Word signal catalogs &mdash; are ingested automatically
-      and structured into a queryable data lake the moment they land.
-    </p>
+  <!-- Dark hero with headline + inline stats -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>Engineering Specification Data Lake</h1>
+        <p>
+          Unstructured engineering documents are ingested automatically
+          and structured into a queryable data lake the moment they land.
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-val" id="m-docs">{{ completed_count }}</div>
+          <div class="hero-stat-label">Documents</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val" id="m-entries">{{ total_entries }}</div>
+          <div class="hero-stat-label">Entries</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val" id="m-cats">{{ total_categories }}</div>
+          <div class="hero-stat-label">Categories</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Metrics -->
-  <section class="metrics">
-    <div class="metric">
-      <div class="metric-value" id="m-docs">{{ completed_count }}</div>
-      <div class="metric-label">Documents Processed</div>
-    </div>
-    <div class="metric">
-      <div class="metric-value" id="m-entries">{{ total_entries }}</div>
-      <div class="metric-label">Data Lake Entries</div>
-    </div>
-    <div class="metric">
-      <div class="metric-value" id="m-cats">{{ total_categories }}</div>
-      <div class="metric-label">Categories</div>
-    </div>
-    <div class="metric metric-status">
-      <div class="metric-value"><span class="live-dot"></span> Continuous</div>
-      <div class="metric-label">Ingestion Status</div>
-    </div>
-  </section>
-
-  <main>
+  <div class="wrap">
     <!-- Upload -->
-    <section class="panel">
-      <div class="panel-head">
-        <h2><span class="ic" data-ic="upload"></span> Upload a Document</h2>
-        <span class="panel-note">PDF &middot; XLSX &middot; DOCX &middot; pre-extracted JSON</span>
+    <section class="section">
+      <div class="section-head">
+        <h2><span data-ic="upload"></span> Upload a Document</h2>
       </div>
-      <div class="upload-zone" id="dropZone">
-        <div class="ic-upload" data-ic="cloud"></div>
-        <p>Drag &amp; drop a specification document here</p>
-        <p class="upload-hint">or choose a file to run it through the 6-stage pipeline</p>
-        <label class="btn btn-primary upload-cta">
-          <span data-ic="file"></span> Choose File
-          <input type="file" id="fileInput" accept=".pdf,.xlsx,.docx,.json,.md" hidden />
-        </label>
+      <div class="upload-card" id="dropZone">
+        <div class="upload-ic" data-ic="cloud"></div>
+        <h3>Drop a specification document here</h3>
+        <p class="hint">or click to browse your files</p>
+        <div class="upload-types">
+          <span>PDF</span><span>XLSX</span><span>DOCX</span><span>JSON</span>
+        </div>
+        <div class="upload-cta">
+          <label class="btn btn-blue">
+            Choose File
+            <input type="file" id="fileInput" accept=".pdf,.xlsx,.docx,.json,.md" hidden />
+          </label>
+        </div>
       </div>
-      <div id="uploadStatus" class="upload-status" style="display:none"></div>
+      <div id="uploadStatus" class="upload-toast"></div>
     </section>
 
     <!-- Source documents -->
-    <section class="panel">
-      <div class="panel-head">
-        <h2><span class="ic" data-ic="docs"></span> Source Documents</h2>
-        <span class="panel-subtitle">Unstructured specs with embedded diagrams, state machines, and tables</span>
+    <section class="section">
+      <div class="section-head">
+        <h2><span data-ic="docs"></span> Source Documents</h2>
+        <p>Unstructured specs with embedded diagrams, state machines, and tables</p>
       </div>
-      <div class="source-grid">
+      <div class="row row-auto">
         {% for doc in source_docs %}
-        <div class="source-card">
-          <div class="source-card-header">
-            <span class="doc-type">
-              {% if '.xlsx' in doc.filename %}XLSX{% elif 'dtc' in doc.filename or 'can' in doc.filename %}DOCX{% else %}PDF{% endif %}
-            </span>
-            {% if doc.document_id %}<span class="doc-id">{{ doc.document_id }}</span>{% endif %}
-          </div>
-          <div class="source-card-title">{{ doc.title }}</div>
+        <div class="card doc-card">
           {% if doc.diagrams %}
-          <div class="source-card-diagrams">
-            {% for diagram in doc.diagrams %}
-            <img src="/diagrams/{{ diagram | replace('diagrams/', '') }}" alt="Embedded diagram" class="diagram-thumb" onclick="this.classList.toggle('expanded')" />
-            {% endfor %}
-          </div>
+          <img src="/diagrams/{{ doc.diagrams[0] | replace('diagrams/', '') }}" alt="Diagram" class="doc-thumb" onclick="this.classList.toggle('expanded')" />
           {% endif %}
-          <div class="source-card-meta">
-            {% if doc.revision %}<span>Rev {{ doc.revision }}</span>{% endif %}
-            {% if doc.tables %}<span>{{ doc.tables }} table{{ 's' if doc.tables != 1 }}</span>{% endif %}
-            {% if doc.diagrams %}<span>{{ doc.diagrams|length }} diagram{{ 's' if doc.diagrams|length != 1 }}</span>{% endif %}
+          <div class="card-body">
+            <div class="doc-header">
+              <span class="doc-type {% if '.xlsx' in doc.filename %}doc-type-xlsx{% elif 'dtc' in doc.filename or 'can' in doc.filename %}doc-type-docx{% else %}doc-type-pdf{% endif %}">
+                {% if '.xlsx' in doc.filename %}XLSX{% elif 'dtc' in doc.filename or 'can' in doc.filename %}DOCX{% else %}PDF{% endif %}
+              </span>
+              {% if doc.document_id %}<span class="doc-id">{{ doc.document_id }}</span>{% endif %}
+            </div>
+            <div class="doc-title">{{ doc.title }}</div>
+            <div class="doc-meta">
+              {% if doc.revision %}<span>Rev {{ doc.revision }}</span>{% endif %}
+              {% if doc.tables %}<span>{{ doc.tables }} table{{ 's' if doc.tables != 1 }}</span>{% endif %}
+              {% if doc.diagrams %}<span>{{ doc.diagrams|length }} diagram{{ 's' if doc.diagrams|length != 1 }}</span>{% endif %}
+            </div>
           </div>
         </div>
         {% endfor %}
       </div>
     </section>
 
-    <div class="grid-2">
-      <!-- Active pipeline -->
-      <section class="panel">
-        <div class="panel-head">
-          <h2><span class="ic" data-ic="flow"></span> Active Pipeline</h2>
-          <span class="panel-subtitle">Ingest &rarr; Extract &rarr; Classify &rarr; Structure &rarr; Validate &rarr; Integrate</span>
+    <!-- Pipeline + History side-by-side -->
+    <section class="section">
+      <div class="row row-2">
+        <div>
+          <div class="section-head">
+            <h2><span data-ic="flow"></span> Active Pipeline</h2>
+            <p>6 stages: Ingest, Extract, Classify, Structure, Validate, Integrate</p>
+          </div>
+          <div id="activePipeline"></div>
         </div>
-        <div id="activePipeline"></div>
-      </section>
-
-      <!-- Processing history -->
-      <section class="panel">
-        <div class="panel-head">
-          <h2><span class="ic" data-ic="history"></span> Processing History</h2>
+        <div>
+          <div class="section-head">
+            <h2><span data-ic="history"></span> Processing History</h2>
+          </div>
+          <div id="history"></div>
         </div>
-        <div id="history"></div>
-      </section>
-    </div>
+      </div>
+    </section>
 
     <!-- Data lake -->
-    <section class="panel">
-      <div class="panel-head">
-        <h2><span class="ic" data-ic="lake"></span> Structured Data Lake</h2>
-        <span class="panel-subtitle">Organized, queryable entities extracted from unstructured specifications</span>
+    <section class="section">
+      <div class="section-head">
+        <h2><span data-ic="lake"></span> Structured Data Lake</h2>
+        <p>Organized, queryable entities extracted from unstructured specifications</p>
       </div>
       <div id="dataLake"></div>
     </section>
-  </main>
+  </div>
 
-  <footer>
-    <span>Spec Data Lake &mdash; continuous ingestion orchestrated by Devin.</span>
-    <span><a href="https://github.com/tedfoley-cog/spec-data-lake-demo">github.com/tedfoley-cog/spec-data-lake-demo</a></span>
+  <footer class="footer">
+    <span>Spec Data Lake &mdash; continuous ingestion orchestrated by Devin</span>
+    <a href="https://github.com/tedfoley-cog/spec-data-lake-demo">github.com/tedfoley-cog/spec-data-lake-demo</a>
   </footer>
 
   <script src="/static/app.js"></script>

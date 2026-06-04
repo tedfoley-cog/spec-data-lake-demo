@@ -1,4 +1,4 @@
-/* Spec Data Lake dashboard — live updates + upload, no full-page refresh. */
+/* Spec Data Lake — live dashboard */
 
 const STAGES = ["received", "extracting", "classifying", "structuring", "validating", "integrated"];
 const STAGE_LABELS = {
@@ -11,17 +11,17 @@ const CAT_NAMES = {
   dtcs: "DTCs", parameters: "Parameters", relationships: "Relationships",
 };
 
-/* ---- Inline SVG icons (stroke-based line icons, Ford blue via currentColor) ---- */
+/* ---- SVG icons (stroke line icons) ---- */
 const ICONS = {
-  upload: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',
-  cloud: '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/></svg>',
-  file: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
-  docs: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>',
-  flow: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h6a3 3 0 0 1 3 3v6"/></svg>',
-  history: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>',
-  lake: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>',
+  upload: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',
+  cloud: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 17.5 8h-1.8A7 7 0 1 0 4 14.9"/><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/></svg>',
+  docs: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>',
+  flow: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h6a3 3 0 0 1 3 3v6"/></svg>',
+  history: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>',
+  lake: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
-  chevron: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
+  chevron: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
+  empty: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
 };
 const CAT_ICONS = {
   signals: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3 8 4-16 3 8h6"/></svg>',
@@ -53,17 +53,16 @@ function renderActive(state) {
   const el = document.getElementById("activePipeline");
   const jobs = Object.values(state.active_jobs || {});
   if (!jobs.length) {
-    el.innerHTML = '<div class="empty"><div class="ic" data-ic="flow"></div><p>No documents processing right now. Upload a file to watch it flow through the pipeline.</p></div>';
-    injectIcons(el);
+    el.innerHTML = `<div class="empty">${ICONS.empty}<p>No documents processing. Upload a file to watch it flow through the pipeline.</p></div>`;
     return;
   }
   el.innerHTML = jobs.map((job) => {
     const ev = (job.events || []).slice(-3).map((e) =>
       `<div class="event"><span class="event-time">${esc((e.timestamp || "").slice(11, 19))}</span><span class="event-msg">${esc(e.message)}</span></div>`).join("");
-    return `<div class="pipeline-job">
-      <div class="pipeline-job-header">
-        <span class="job-id">${esc(job.job_id)}</span>
-        <span class="job-file">${esc(job.filename)}</span>
+    return `<div class="pipeline-card">
+      <div class="pipeline-header">
+        <span class="pipeline-file">${esc(job.filename)}</span>
+        <span class="pipeline-id">${esc(job.job_id)}</span>
         <span class="badge ${job.current_stage}">${esc(job.current_stage)}</span>
       </div>
       ${stepper(job.current_stage)}
@@ -76,8 +75,7 @@ function renderHistory(state) {
   const el = document.getElementById("history");
   const jobs = (state.completed_jobs || []).slice().reverse();
   if (!jobs.length) {
-    el.innerHTML = '<div class="empty"><div class="ic" data-ic="history"></div><p>No documents processed yet.</p></div>';
-    injectIcons(el);
+    el.innerHTML = `<div class="empty">${ICONS.empty}<p>No documents processed yet.</p></div>`;
     return;
   }
   el.innerHTML = '<div class="timeline">' + jobs.map((job) => {
@@ -85,11 +83,11 @@ function renderHistory(state) {
     return `<div class="tl-item">
       <span class="tl-dot"></span>
       <div class="tl-head">
-        <span class="job-file">${esc(job.filename)}</span>
+        <span class="tl-file">${esc(job.filename)}</span>
         <span class="badge ${job.current_stage}">${esc(job.current_stage)}</span>
       </div>
       <div class="tl-meta">
-        <span>Categories: <b>${esc((job.categories || []).map((c) => CAT_NAMES[c] || c).join(", ") || "—")}</b></span>
+        <span>Categories: <b>${esc((job.categories || []).map((c) => CAT_NAMES[c] || c).join(", ") || "\u2014")}</b></span>
         ${entities != null ? `<span>Entities: <b>${entities}</b></span>` : ""}
         <span>Files: <b>${(job.data_lake_paths || []).length}</b></span>
       </div>
@@ -101,10 +99,9 @@ function renderLake(lake) {
   const el = document.getElementById("dataLake");
   const cats = Object.keys(lake);
   if (!cats.length) {
-    el.innerHTML = `<div class="empty"><div class="ic" data-ic="lake"></div>
+    el.innerHTML = `<div class="empty">${ICONS.empty}
       <p>The data lake is empty. Upload a document or process the bundled source specs to populate it.</p>
-      <button class="btn btn-primary" id="processAllBtn"><span data-ic="flow"></span> Process All Source Documents</button></div>`;
-    injectIcons(el);
+      <button class="btn btn-blue" id="processAllBtn">Process All Source Documents</button></div>`;
     const btn = document.getElementById("processAllBtn");
     if (btn) btn.onclick = processAll;
     return;
@@ -120,16 +117,16 @@ function renderLake(lake) {
     const body = files.map((f) => {
       const rows = (f.entries || []).slice(0, 5).map((e) =>
         `<div class="entry"><span class="entry-id">${esc(e.entry_id)}</span><span class="entry-src">${esc(e.source_document || "")}</span></div>`).join("");
-      const more = (f.entries || []).length > 5 ? `<div class="entry more">… and ${f.entries.length - 5} more</div>` : "";
+      const more = (f.entries || []).length > 5 ? `<div class="entry more">\u2026 and ${f.entries.length - 5} more</div>` : "";
       return `<div class="lake-file">
         <div class="lf-head"><span class="lf-name">${esc(f.source_document || f.filename)}</span><span class="lf-count">${f.entry_count} entries</span></div>
         ${rows}${more}</div>`;
     }).join("");
     return `<div class="cat ${isOpen ? "open" : ""}" data-cat="${esc(cat)}">
       <div class="cat-head">
-        <span class="cat-ic">${CAT_ICONS[cat] || CAT_ICONS.relationships}</span>
+        <span class="cat-icon">${CAT_ICONS[cat] || CAT_ICONS.relationships}</span>
         <span class="cat-name">${CAT_NAMES[cat] || (cat.charAt(0).toUpperCase() + cat.slice(1))}</span>
-        <span class="cat-count">${count} entries</span>
+        <span class="cat-count">${count}</span>
         <span class="cat-arrow">${ICONS.chevron}</span>
       </div>
       <div class="cat-body">${body}</div>
@@ -137,9 +134,9 @@ function renderLake(lake) {
   }).join("") + "</div>";
   el.querySelectorAll(".cat-head").forEach((h) => {
     h.onclick = () => {
-      const cat = h.parentElement.dataset.cat;
+      const c = h.parentElement.dataset.cat;
       h.parentElement.classList.toggle("open");
-      if (openCats.has(cat)) openCats.delete(cat); else openCats.add(cat);
+      if (openCats.has(c)) openCats.delete(c); else openCats.add(c);
     };
   });
 }
@@ -161,7 +158,7 @@ async function refresh() {
   } catch (e) { /* keep last good render */ }
 }
 
-/* ---------- Upload (with animated stepper preview) ---------- */
+/* ---------- Upload ---------- */
 const dropZone = document.getElementById("dropZone");
 const fileInput = document.getElementById("fileInput");
 const uploadStatus = document.getElementById("uploadStatus");
@@ -177,20 +174,18 @@ fileInput.addEventListener("change", () => { if (fileInput.files.length) uploadF
 let uploadTick = null;
 
 function setStatus(cls, msg) {
-  uploadStatus.style.display = "flex";
-  uploadStatus.className = "upload-status " + cls;
+  uploadStatus.className = "upload-toast visible " + cls;
   uploadStatus.textContent = msg;
 }
 
 async function uploadFile(file) {
-  setStatus("uploading", `Ingesting ${file.name} …`);
-  // animate the active-pipeline stepper while the request runs
+  setStatus("uploading", `Ingesting ${file.name}\u2026`);
   const el = document.getElementById("activePipeline");
   if (uploadTick) clearInterval(uploadTick);
   let step = 0;
   uploadTick = setInterval(() => {
-    el.innerHTML = `<div class="pipeline-job">
-      <div class="pipeline-job-header"><span class="job-file">${esc(file.name)}</span>
+    el.innerHTML = `<div class="pipeline-card">
+      <div class="pipeline-header"><span class="pipeline-file">${esc(file.name)}</span>
       <span class="badge ${STAGES[step]}">${STAGES[step]}</span></div>${stepper(STAGES[step])}</div>`;
     step = Math.min(step + 1, STAGES.length - 1);
   }, 280);
@@ -204,7 +199,7 @@ async function uploadFile(file) {
     uploadTick = null;
     if (data.status === "success") {
       const cats = (data.job.categories || []).join(", ") || "no new categories";
-      setStatus("success", `${file.name} integrated into the data lake — ${cats}.`);
+      setStatus("success", `${file.name} integrated \u2014 ${cats}`);
     } else {
       setStatus("error", `Error: ${data.error || "processing failed"}`);
     }
@@ -217,7 +212,7 @@ async function uploadFile(file) {
 }
 
 async function processAll() {
-  setStatus("uploading", "Processing all bundled source documents …");
+  setStatus("uploading", "Processing all bundled source documents\u2026");
   try {
     const resp = await fetch("/api/process-all", { method: "POST" });
     const data = await resp.json();
@@ -234,6 +229,12 @@ function injectIcons(root) {
     if (ICONS[k]) { n.innerHTML = ICONS[k]; n.removeAttribute("data-ic"); }
   });
 }
+
+/* ---------- Sticky nav shadow on scroll ---------- */
+const nav = document.getElementById("nav");
+window.addEventListener("scroll", () => {
+  nav.classList.toggle("scrolled", window.scrollY > 4);
+}, { passive: true });
 
 /* ---------- Init ---------- */
 injectIcons(document);
