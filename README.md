@@ -100,6 +100,58 @@ dashboard at `localhost:5001`, or a Devin session prompt.
 - Data lake browser (expandable categories with entry details)
 - Source document viewer with embedded engineering diagrams
 
+## Run the dashboard locally
+
+The dashboard is a FastAPI app. From a fresh clone it runs in two commands with
+[`uv`](https://docs.astral.sh/uv/) (recommended), or with plain `pip`.
+
+### Option A — `uv` (recommended)
+
+```bash
+git clone https://github.com/tedfoley-cog/spec-data-lake-demo.git
+cd spec-data-lake-demo
+
+uv sync                                  # create venv + install dependencies
+uv run uvicorn dashboard.app:app --port 5001 --reload
+```
+
+Then open **http://localhost:5001** in your browser.
+
+### Option B — `pip` / venv
+
+```bash
+git clone https://github.com/tedfoley-cog/spec-data-lake-demo.git
+cd spec-data-lake-demo
+
+python3 -m venv .venv
+source .venv/bin/activate                # Windows: .venv\Scripts\activate
+pip install -e .
+
+uvicorn dashboard.app:app --port 5001 --reload
+```
+
+### Using the dashboard
+
+- The data lake starts **empty**. Click **Process All Source Documents** (shown
+  when the lake is empty), or **drag & drop / choose a file** in the upload panel
+  to run a single document through the 6-stage pipeline and watch it populate.
+- Reset the lake to the empty "before" state at any time:
+
+  ```bash
+  rm -rf data_lake/*/  source_documents/uploads  && echo '{}' > dashboard/state.json
+  ```
+
+- Run the test suite and checks:
+
+  ```bash
+  uv run pytest -q          # 17 tests
+  uv run ruff check .       # lint
+  uv run mypy dashboard pipeline jira
+  ```
+
+> The dashboard updates live (polls every few seconds) — no page reload needed
+> while documents are processing.
+
 ## Repo layout
 
 ```
