@@ -1,1 +1,219 @@
-{"data_lake_version":"1.0","created_at":"","documents":[],"total_entries":0,"processing_history":[]}
+{
+  "data_lake_version": "1.0",
+  "created_at": "",
+  "documents": [
+    {
+      "job_id": "JOB-25C75048",
+      "filename": "pcm_power_modes.extracted.json",
+      "processed_at": "2026-06-05T19:51:21.214250+00:00",
+      "categories": [
+        "signals",
+        "states",
+        "dtcs"
+      ],
+      "entries": [
+        {
+          "entry_id": "SIG-0x510-IgnitionSwitch",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x512-BatteryVoltage",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x120-EngineRPM",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x511-StartRequest",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x210-TransRange",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x310-BrakePedal",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x122-OilPressure",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x123-CoolantTemp",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x7F0-FaultCritical",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x130-PowerModeState",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x131-StarterRelay",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x131-FuelPumpRelay",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x131-IgnitionCoilEn",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "STATE-OFF",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "STATE-ACC",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "STATE-RUN",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "STATE-CRANK",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "STATE-RUN_ENGINE",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "STATE-EMERGENCY",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-OFF-ACC",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-ACC-RUN",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-RUN-CRANK",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-CRANK-RUN_ENGINE",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-RUN-ACC",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-ACC-OFF",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-RUN-OFF",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-CRANK-RUN",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-RUN_ENGINE-RUN",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-RUN_ENGINE-EMERGENCY",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-RUN_ENGINE-EMERGENCY",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-RUN_ENGINE-EMERGENCY",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-CRANK-EMERGENCY",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "TRANS-EMERGENCY-OFF",
+          "category": "states",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-P0335",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-P0562",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-P0563",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-P0602",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-U0100",
+          "category": "dtcs",
+          "source_revision": "C"
+        }
+      ]
+    }
+  ],
+  "total_entries": 38,
+  "processing_history": [
+    {
+      "job_id": "JOB-25C75048",
+      "filename": "pcm_power_modes.extracted.json",
+      "timestamp": "2026-06-05T19:51:21.214271+00:00",
+      "new_entries": 38,
+      "updated_entries": 0,
+      "total_entries": 38
+    }
+  ]
+}

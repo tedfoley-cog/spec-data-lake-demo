@@ -1,0 +1,78 @@
+{
+  "source_document": "ES-PCM-2024-001",
+  "source_revision": "C",
+  "integrated_at": "2026-06-05T19:51:21.214113+00:00",
+  "entry_count": 5,
+  "entries": [
+    {
+      "entry_id": "DTC-P0335",
+      "category": "dtcs",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "code": "P0335",
+        "description": "Crankshaft Position Sensor",
+        "enable_condition": "RUN+ENGINE, RPM = 0 for 5s",
+        "mil": true
+      },
+      "created_at": "2026-06-05T19:51:21.012880+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0562",
+      "category": "dtcs",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "code": "P0562",
+        "description": "System Voltage Low",
+        "enable_condition": "Any mode, BATT_V < 9.0V for 30s",
+        "mil": true
+      },
+      "created_at": "2026-06-05T19:51:21.012883+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0563",
+      "category": "dtcs",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "code": "P0563",
+        "description": "System Voltage High",
+        "enable_condition": "Any mode, BATT_V > 16.0V for 10s",
+        "mil": true
+      },
+      "created_at": "2026-06-05T19:51:21.012885+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0602",
+      "category": "dtcs",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "code": "P0602",
+        "description": "PCM Calibration Error",
+        "enable_condition": "Power-on self-test",
+        "mil": true
+      },
+      "created_at": "2026-06-05T19:51:21.012888+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-U0100",
+      "category": "dtcs",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "code": "U0100",
+        "description": "Lost Communication with ECM",
+        "enable_condition": "RUN or RUN+ENGINE, no msg for 1s",
+        "mil": true
+      },
+      "created_at": "2026-06-05T19:51:21.012890+00:00",
+      "version": 1
+    }
+  ]
+}
