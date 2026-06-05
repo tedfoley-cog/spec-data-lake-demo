@@ -62,6 +62,8 @@ def load_sessions() -> list[dict[str, Any]]:
         return []
     with open(SESSIONS_FILE) as f:
         data = json.load(f)
+    if isinstance(data, list):
+        return data
     sessions: list[dict[str, Any]] = data.get("sessions", [])
     return sessions
 
