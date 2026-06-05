@@ -1,1 +1,26 @@
-{"data_lake_version":"1.0","created_at":"","documents":[],"total_entries":0,"processing_history":[]}
+{
+  "data_lake_version": "1.0",
+  "created_at": "",
+  "documents": [
+    {
+      "job_id": "JOB-1219E512",
+      "filename": "eps_control_module_spec.pdf",
+      "processed_at": "2026-06-05T19:22:24.345469+00:00",
+      "categories": [
+        "requirements"
+      ],
+      "entries": []
+    }
+  ],
+  "total_entries": 0,
+  "processing_history": [
+    {
+      "job_id": "JOB-1219E512",
+      "filename": "eps_control_module_spec.pdf",
+      "timestamp": "2026-06-05T19:22:24.345479+00:00",
+      "new_entries": 0,
+      "updated_entries": 0,
+      "total_entries": 0
+    }
+  ]
+}

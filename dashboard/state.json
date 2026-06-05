@@ -1,1 +1,116 @@
-{"active_jobs":{},"completed_jobs":[],"data_lake_summary":{}}
+{
+  "active_jobs": {},
+  "completed_jobs": [
+    {
+      "job_id": "JOB-1219E512",
+      "filename": "eps_control_module_spec.pdf",
+      "file_size": 6140,
+      "file_type": "pdf_document",
+      "current_stage": "integrated",
+      "events": [
+        {
+          "stage": "received",
+          "timestamp": "2026-06-05T19:22:23.842564+00:00",
+          "message": "File received: eps_control_module_spec.pdf (6,140 bytes, type: pdf_document)",
+          "details": {}
+        },
+        {
+          "stage": "extracting",
+          "timestamp": "2026-06-05T19:22:23.943108+00:00",
+          "message": "Extracting content from eps_control_module_spec.pdf",
+          "details": {}
+        },
+        {
+          "stage": "extracting",
+          "timestamp": "2026-06-05T19:22:23.943133+00:00",
+          "message": "Extracted 0 entities, 0 tables, 0 diagrams",
+          "details": {}
+        },
+        {
+          "stage": "classifying",
+          "timestamp": "2026-06-05T19:22:24.043622+00:00",
+          "message": "Analyzing content for category classification",
+          "details": {}
+        },
+        {
+          "stage": "classifying",
+          "timestamp": "2026-06-05T19:22:24.043681+00:00",
+          "message": "Classified into 1 categories: requirements",
+          "details": {}
+        },
+        {
+          "stage": "structuring",
+          "timestamp": "2026-06-05T19:22:24.144166+00:00",
+          "message": "Converting to data lake schema",
+          "details": {}
+        },
+        {
+          "stage": "structuring",
+          "timestamp": "2026-06-05T19:22:24.144199+00:00",
+          "message": "Structured 0 entries across 1 categories",
+          "details": {}
+        },
+        {
+          "stage": "validating",
+          "timestamp": "2026-06-05T19:22:24.244770+00:00",
+          "message": "Validating 0 entries against data lake",
+          "details": {}
+        },
+        {
+          "stage": "validating",
+          "timestamp": "2026-06-05T19:22:24.244887+00:00",
+          "message": "Validation complete: 0 new, 0 updates, 0 unchanged",
+          "details": {}
+        },
+        {
+          "stage": "integrated",
+          "timestamp": "2026-06-05T19:22:24.345349+00:00",
+          "message": "Integrating 0 entries into data lake",
+          "details": {}
+        },
+        {
+          "stage": "integrated",
+          "timestamp": "2026-06-05T19:22:24.345591+00:00",
+          "message": "Integrated into data lake: 0 files written",
+          "details": {}
+        }
+      ],
+      "extracted_entities": {},
+      "categories": [
+        "requirements"
+      ],
+      "data_lake_paths": [],
+      "error": ""
+    }
+  ],
+  "data_lake_summary": {
+    "categories": {
+      "dtcs": {
+        "files": 0,
+        "entries": 0
+      },
+      "parameters": {
+        "files": 0,
+        "entries": 0
+      },
+      "relationships": {
+        "files": 0,
+        "entries": 0
+      },
+      "requirements": {
+        "files": 0,
+        "entries": 0
+      },
+      "signals": {
+        "files": 0,
+        "entries": 0
+      },
+      "states": {
+        "files": 0,
+        "entries": 0
+      }
+    },
+    "total_files": 0,
+    "total_entries": 0
+  }
+}
