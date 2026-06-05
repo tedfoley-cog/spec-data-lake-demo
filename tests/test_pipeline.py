@@ -9,8 +9,16 @@ from pipeline.extract import extract_content
 from pipeline.ingest import ingest_file
 from pipeline.integrate import integrate_to_data_lake
 from pipeline.models import DocumentCategory, PipelineStage
+from pipeline.orchestrator import process_document
 from pipeline.structure import structure_for_data_lake
 from pipeline.validate import validate_entries
+
+DEMO_PDF = (
+    Path(__file__).resolve().parents[1]
+    / "source_documents"
+    / "demo"
+    / "eps_control_module_spec.pdf"
+)
 
 
 class TestIngest:
@@ -24,7 +32,8 @@ class TestIngest:
 
     def test_ingest_detects_file_types(self, tmp_path: Path) -> None:
         for suffix, expected in [(".json", "extracted_json"), (".md", "markdown_spec"),
-                                  (".xlsx", "excel_workbook"), (".txt", "unknown")]:
+                                  (".xlsx", "excel_workbook"), (".pdf", "pdf_document"),
+                                  (".docx", "word_document"), (".txt", "unknown")]:
             f = tmp_path / f"test{suffix}"
             f.write_text("test")
             job = ingest_file(f)
@@ -47,6 +56,27 @@ class TestExtract:
         job = ingest_file(md_file)
         extracted = extract_content(job, md_file)
         assert len(extracted["raw_sections"]) > 0
+
+
+class TestPdfExtract:
+    def test_extract_tables_from_pdf(self) -> None:
+        assert DEMO_PDF.exists(), "run scripts/generate_demo_pdf.py to create the demo PDF"
+        job = ingest_file(DEMO_PDF)
+        assert job.file_type == "pdf_document"
+        extracted = extract_content(job, DEMO_PDF)
+        entities = extracted["entities"]
+        assert len(entities.get("dtcs", [])) == 7
+        assert len(entities.get("signals", [])) == 7
+        assert len(entities.get("parameters", [])) == 6
+        assert extracted["metadata"]["document_id"] == "FNV-EPS-4521"
+        assert extracted["diagrams"]  # state-machine diagram detected
+
+    def test_pdf_end_to_end_populates_categories(self) -> None:
+        job = process_document(DEMO_PDF, update_state=False)
+        assert job.current_stage == PipelineStage.INTEGRATED
+        assert sum(job.extracted_entities.values()) == 20
+        for category in ("signals", "dtcs", "parameters"):
+            assert category in job.categories
 
 
 class TestClassify:
@@ -98,8 +128,6 @@ class TestIntegrate:
 
 class TestFullPipeline:
     def test_end_to_end(self, tmp_source_dir: Path) -> None:
-        from pipeline.orchestrator import process_document
-
         json_file = tmp_source_dir / "test_spec.extracted.json"
         job = process_document(json_file, update_state=False)
         assert job.current_stage == PipelineStage.INTEGRATED
