@@ -1,0 +1,229 @@
+{
+  "source_document": "ES-PCM-2024-001",
+  "source_revision": "C",
+  "integrated_at": "2026-06-05T19:54:37.370716+00:00",
+  "entry_count": 13,
+  "entries": [
+    {
+      "entry_id": "SIG-0x510-IgnitionSwitch",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "IgnitionSwitch",
+        "message_id": "0x510",
+        "direction": "input",
+        "bit_position": 0,
+        "length": 3,
+        "scale": 1,
+        "unit": "enum"
+      },
+      "created_at": "2026-06-05T19:54:37.169810+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x512-BatteryVoltage",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "BatteryVoltage",
+        "message_id": "0x512",
+        "direction": "input",
+        "bit_position": 0,
+        "length": 16,
+        "scale": 0.01,
+        "unit": "V"
+      },
+      "created_at": "2026-06-05T19:54:37.169821+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x120-EngineRPM",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "EngineRPM",
+        "message_id": "0x120",
+        "direction": "input",
+        "bit_position": 0,
+        "length": 16,
+        "scale": 0.25,
+        "unit": "rpm"
+      },
+      "created_at": "2026-06-05T19:54:37.169828+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x511-StartRequest",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "StartRequest",
+        "message_id": "0x511",
+        "direction": "input",
+        "bit_position": 0,
+        "length": 1,
+        "scale": 1,
+        "unit": "bool"
+      },
+      "created_at": "2026-06-05T19:54:37.169832+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x210-TransRange",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "TransRange",
+        "message_id": "0x210",
+        "direction": "input",
+        "bit_position": 4,
+        "length": 4,
+        "scale": 1,
+        "unit": "enum"
+      },
+      "created_at": "2026-06-05T19:54:37.169836+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x310-BrakePedal",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "BrakePedal",
+        "message_id": "0x310",
+        "direction": "input",
+        "bit_position": 0,
+        "length": 1,
+        "scale": 1,
+        "unit": "bool"
+      },
+      "created_at": "2026-06-05T19:54:37.169839+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x122-OilPressure",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "OilPressure",
+        "message_id": "0x122",
+        "direction": "input",
+        "bit_position": 0,
+        "length": 8,
+        "scale": 0.5,
+        "unit": "psi"
+      },
+      "created_at": "2026-06-05T19:54:37.169842+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x123-CoolantTemp",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "CoolantTemp",
+        "message_id": "0x123",
+        "direction": "input",
+        "bit_position": 0,
+        "length": 8,
+        "scale": 1,
+        "unit": "C"
+      },
+      "created_at": "2026-06-05T19:54:37.169845+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x7F0-FaultCritical",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "FaultCritical",
+        "message_id": "0x7F0",
+        "direction": "input",
+        "bit_position": 0,
+        "length": 1,
+        "scale": 1,
+        "unit": "bool"
+      },
+      "created_at": "2026-06-05T19:54:37.169848+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x130-PowerModeState",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "PowerModeState",
+        "message_id": "0x130",
+        "direction": "output",
+        "bit_position": 0,
+        "length": 8,
+        "scale": 1,
+        "unit": "enum"
+      },
+      "created_at": "2026-06-05T19:54:37.169853+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x131-StarterRelay",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "StarterRelay",
+        "message_id": "0x131",
+        "direction": "output",
+        "bit_position": 0,
+        "length": 1,
+        "scale": 1,
+        "unit": "bool"
+      },
+      "created_at": "2026-06-05T19:54:37.169856+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x131-FuelPumpRelay",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "FuelPumpRelay",
+        "message_id": "0x131",
+        "direction": "output",
+        "bit_position": 1,
+        "length": 1,
+        "scale": 1,
+        "unit": "bool"
+      },
+      "created_at": "2026-06-05T19:54:37.169859+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "SIG-0x131-IgnitionCoilEn",
+      "category": "signals",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "signal_name": "IgnitionCoilEn",
+        "message_id": "0x131",
+        "direction": "output",
+        "bit_position": 2,
+        "length": 1,
+        "scale": 1,
+        "unit": "bool"
+      },
+      "created_at": "2026-06-05T19:54:37.169862+00:00",
+      "version": 1
+    }
+  ]
+}

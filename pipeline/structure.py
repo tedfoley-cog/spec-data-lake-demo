@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+from collections import Counter
 from typing import Any
 
 from pipeline.models import (
@@ -41,6 +43,11 @@ def structure_for_data_lake(
         f"Structured {len(entries)} entries across {len(categories)} categories",
     )
     return entries
+
+
+def _sanitize_id_part(text: str) -> str:
+    """Normalize a free-text fragment into an entry_id-safe token."""
+    return re.sub(r"[^A-Za-z0-9]+", "_", text).strip("_").upper()
 
 
 def _structure_category(
@@ -156,12 +163,23 @@ def _structure_states(
             data=state,
         ))
 
+    # Count from/to pairs so multiple transitions between the same states
+    # (e.g. several RUN_ENGINE->EMERGENCY conditions) get unique entry_ids.
+    pair_counts = Counter(
+        (t.get("from_state", ""), t.get("to_state", ""))
+        for t in entities.get("transitions", [])
+        if isinstance(t, dict)
+    )
     for trans in entities.get("transitions", []):
         if not isinstance(trans, dict):
             continue
         from_s = trans.get("from_state", "")
         to_s = trans.get("to_state", "")
         entry_id = f"TRANS-{from_s}-{to_s}"
+        if pair_counts[(from_s, to_s)] > 1:
+            cond = _sanitize_id_part(str(trans.get("condition", "")))
+            if cond:
+                entry_id = f"{entry_id}-{cond}"
         entries.append(DataLakeEntry(
             entry_id=entry_id,
             category=DocumentCategory.STATES,

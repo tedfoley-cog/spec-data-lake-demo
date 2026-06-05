@@ -1,0 +1,326 @@
+{
+  "source_document": "ES-PCM-2024-001",
+  "source_revision": "C",
+  "integrated_at": "2026-06-05T19:54:37.371032+00:00",
+  "entry_count": 20,
+  "entries": [
+    {
+      "entry_id": "STATE-OFF",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "state_id": "OFF",
+        "code": "0x00",
+        "name": "OFF",
+        "description": "All vehicle systems disabled",
+        "active_systems": []
+      },
+      "created_at": "2026-06-05T19:54:37.169869+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "STATE-ACC",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "state_id": "ACC",
+        "code": "0x01",
+        "name": "ACCESSORY",
+        "description": "Infotainment and accessory power",
+        "active_systems": [
+          "Radio",
+          "USB",
+          "12V outlets"
+        ]
+      },
+      "created_at": "2026-06-05T19:54:37.169873+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "STATE-RUN",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "state_id": "RUN",
+        "code": "0x02",
+        "name": "RUN",
+        "description": "All ECUs powered, engine off",
+        "active_systems": [
+          "All ECUs",
+          "Fuel pump prime",
+          "Gauges"
+        ]
+      },
+      "created_at": "2026-06-05T19:54:37.169876+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "STATE-CRANK",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "state_id": "CRANK",
+        "code": "0x03",
+        "name": "CRANK",
+        "description": "Starter motor engaged",
+        "active_systems": [
+          "Starter relay",
+          "Ignition coils"
+        ]
+      },
+      "created_at": "2026-06-05T19:54:37.169878+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "STATE-RUN_ENGINE",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "state_id": "RUN_ENGINE",
+        "code": "0x04",
+        "name": "RUN+ENGINE",
+        "description": "Normal driving operation",
+        "active_systems": [
+          "Full powertrain",
+          "Transmission"
+        ]
+      },
+      "created_at": "2026-06-05T19:54:37.169881+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "STATE-EMERGENCY",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "state_id": "EMERGENCY",
+        "code": "0x05",
+        "name": "EMERGENCY STOP",
+        "description": "Fault-triggered shutdown",
+        "active_systems": [
+          "Hazard lights",
+          "Fuel pump shutoff"
+        ]
+      },
+      "created_at": "2026-06-05T19:54:37.169889+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-OFF-ACC",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "OFF",
+        "to_state": "ACC",
+        "condition": "IGN_SW = ACC",
+        "guard": "BATT_V > 9.0V",
+        "category": "forward"
+      },
+      "created_at": "2026-06-05T19:54:37.169942+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-ACC-RUN",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "ACC",
+        "to_state": "RUN",
+        "condition": "IGN_SW = RUN",
+        "guard": "BATT_V > 10.5V",
+        "category": "forward"
+      },
+      "created_at": "2026-06-05T19:54:37.169947+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-RUN-CRANK",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "RUN",
+        "to_state": "CRANK",
+        "condition": "START_REQ = 1",
+        "guard": "TRANS_RANGE = P/N, BRAKE = ON",
+        "category": "forward"
+      },
+      "created_at": "2026-06-05T19:54:37.169950+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-CRANK-RUN_ENGINE",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "CRANK",
+        "to_state": "RUN_ENGINE",
+        "condition": "ENGINE_RPM > 400",
+        "guard": "",
+        "timeout_ms": 10000,
+        "category": "forward"
+      },
+      "created_at": "2026-06-05T19:54:37.169952+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-RUN-ACC",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "RUN",
+        "to_state": "ACC",
+        "condition": "IGN_SW = ACC",
+        "guard": "",
+        "category": "reverse"
+      },
+      "created_at": "2026-06-05T19:54:37.169955+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-ACC-OFF",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "ACC",
+        "to_state": "OFF",
+        "condition": "IGN_SW = OFF",
+        "guard": "",
+        "category": "reverse"
+      },
+      "created_at": "2026-06-05T19:54:37.169957+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-RUN-OFF",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "RUN",
+        "to_state": "OFF",
+        "condition": "IGN_SW = OFF",
+        "guard": "Direct shutdown",
+        "category": "reverse"
+      },
+      "created_at": "2026-06-05T19:54:37.169960+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-CRANK-RUN",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "CRANK",
+        "to_state": "RUN",
+        "condition": "START_REQ = 0",
+        "guard": "Crank abort",
+        "category": "reverse"
+      },
+      "created_at": "2026-06-05T19:54:37.169963+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-RUN_ENGINE-RUN",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "RUN_ENGINE",
+        "to_state": "RUN",
+        "condition": "ENGINE_STALL",
+        "guard": "RPM < 200 for 2s",
+        "category": "reverse"
+      },
+      "created_at": "2026-06-05T19:54:37.169965+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY-FAULT_CRITICAL_1",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "RUN_ENGINE",
+        "to_state": "EMERGENCY",
+        "condition": "FAULT_CRITICAL = 1",
+        "guard": "",
+        "category": "emergency"
+      },
+      "created_at": "2026-06-05T19:54:37.170078+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY-OIL_PRESS_5_PSI",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "RUN_ENGINE",
+        "to_state": "EMERGENCY",
+        "condition": "OIL_PRESS < 5 psi",
+        "guard": "",
+        "category": "emergency"
+      },
+      "created_at": "2026-06-05T19:54:37.170086+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY-COOLANT_TEMP_120C",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "RUN_ENGINE",
+        "to_state": "EMERGENCY",
+        "condition": "COOLANT_TEMP > 120C",
+        "guard": "",
+        "category": "emergency"
+      },
+      "created_at": "2026-06-05T19:54:37.170092+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-CRANK-EMERGENCY",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "CRANK",
+        "to_state": "EMERGENCY",
+        "condition": "CRANK_TIMEOUT > 10s",
+        "guard": "",
+        "category": "emergency"
+      },
+      "created_at": "2026-06-05T19:54:37.170095+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "TRANS-EMERGENCY-OFF",
+      "category": "states",
+      "source_document": "ES-PCM-2024-001",
+      "source_revision": "C",
+      "data": {
+        "from_state": "EMERGENCY",
+        "to_state": "OFF",
+        "condition": "FAULT_CLEARED",
+        "guard": "Manual reset required",
+        "category": "emergency"
+      },
+      "created_at": "2026-06-05T19:54:37.170097+00:00",
+      "version": 1
+    }
+  ]
+}

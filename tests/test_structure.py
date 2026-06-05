@@ -71,6 +71,39 @@ class TestStructureStates:
         entries = structure_for_data_lake(job, extracted, [DocumentCategory.STATES])
         assert len(entries) == 3  # 2 states + 1 transition
 
+    def test_multiple_transitions_between_same_states_get_unique_ids(self) -> None:
+        job = _make_job()
+        extracted = {
+            "entities": {
+                "transitions": [
+                    {"from_state": "RUN_ENGINE", "to_state": "EMERGENCY",
+                     "condition": "FAULT_CRITICAL = 1"},
+                    {"from_state": "RUN_ENGINE", "to_state": "EMERGENCY",
+                     "condition": "OIL_PRESS < 5 psi"},
+                    {"from_state": "RUN_ENGINE", "to_state": "EMERGENCY",
+                     "condition": "COOLANT_TEMP > 120C"},
+                ],
+            },
+            "metadata": {"document_id": "ES-001", "revision": "A"},
+        }
+        entries = structure_for_data_lake(job, extracted, [DocumentCategory.STATES])
+        ids = [e.entry_id for e in entries]
+        assert len(ids) == len(set(ids))  # no collisions
+        assert "TRANS-RUN_ENGINE-EMERGENCY-FAULT_CRITICAL_1" in ids
+
+    def test_single_transition_keeps_clean_id(self) -> None:
+        job = _make_job()
+        extracted = {
+            "entities": {
+                "transitions": [
+                    {"from_state": "OFF", "to_state": "ACC", "condition": "IGN_SW = ACC"},
+                ],
+            },
+            "metadata": {"document_id": "ES-001", "revision": "A"},
+        }
+        entries = structure_for_data_lake(job, extracted, [DocumentCategory.STATES])
+        assert entries[0].entry_id == "TRANS-OFF-ACC"
+
 
 class TestStructureDTCs:
     def test_structures_dtcs(self) -> None:
