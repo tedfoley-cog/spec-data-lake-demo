@@ -1,0 +1,104 @@
+{
+  "source_document": "FNV-EPS-4521",
+  "source_revision": "C",
+  "integrated_at": "2026-06-05T19:36:30.349731+00:00",
+  "entry_count": 6,
+  "entries": [
+    {
+      "entry_id": "PARAM-K_ASSIST_GAIN",
+      "category": "parameters",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "Parameter ID": "K_ASSIST_GAIN",
+        "Name": "Base Assist Gain",
+        "Min": "0.5",
+        "Max": "3.0",
+        "Default": "1.8",
+        "Unit": "Nm/Nm"
+      },
+      "created_at": "2026-06-05T19:36:30.147996+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-K_RETURN_GAIN",
+      "category": "parameters",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "Parameter ID": "K_RETURN_GAIN",
+        "Name": "Active Return Gain",
+        "Min": "0.0",
+        "Max": "1.5",
+        "Default": "0.6",
+        "Unit": "-"
+      },
+      "created_at": "2026-06-05T19:36:30.148000+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-K_DAMP_HI",
+      "category": "parameters",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "Parameter ID": "K_DAMP_HI",
+        "Name": "High-Speed Damping",
+        "Min": "0.0",
+        "Max": "2.0",
+        "Default": "0.9",
+        "Unit": "Nm/(deg/s)"
+      },
+      "created_at": "2026-06-05T19:36:30.148002+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-T_DERATE_ON",
+      "category": "parameters",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "Parameter ID": "T_DERATE_ON",
+        "Name": "Thermal Derate Onset",
+        "Min": "90",
+        "Max": "140",
+        "Default": "115",
+        "Unit": "degC"
+      },
+      "created_at": "2026-06-05T19:36:30.148005+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-T_DERATE_OFF",
+      "category": "parameters",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "Parameter ID": "T_DERATE_OFF",
+        "Name": "Thermal Derate Recovery",
+        "Min": "70",
+        "Max": "120",
+        "Default": "95",
+        "Unit": "degC"
+      },
+      "created_at": "2026-06-05T19:36:30.148008+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-V_ASSIST_MAX",
+      "category": "parameters",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "Parameter ID": "V_ASSIST_MAX",
+        "Name": "Max Assist Speed",
+        "Min": "60",
+        "Max": "250",
+        "Default": "200",
+        "Unit": "kph"
+      },
+      "created_at": "2026-06-05T19:36:30.148010+00:00",
+      "version": 1
+    }
+  ]
+}

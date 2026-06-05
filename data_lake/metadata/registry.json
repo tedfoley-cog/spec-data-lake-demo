@@ -1,1 +1,129 @@
-{"data_lake_version":"1.0","created_at":"","documents":[],"total_entries":0,"processing_history":[]}
+{
+  "data_lake_version": "1.0",
+  "created_at": "",
+  "documents": [
+    {
+      "job_id": "JOB-D77FF233",
+      "filename": "eps_control_module_spec.pdf",
+      "processed_at": "2026-06-05T19:36:30.349896+00:00",
+      "categories": [
+        "signals",
+        "dtcs",
+        "parameters"
+      ],
+      "entries": [
+        {
+          "entry_id": "SIG-0x1A4-EPS_AssistTorque",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x1A4-EPS_MotorCurrent",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x0C8-EPS_SteeringAngle",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x0C8-EPS_AngleRate",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x2F0-EPS_ModuleState",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x2F0-EPS_TempMotor",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "SIG-0x2F0-EPS_FaultActive",
+          "category": "signals",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-C1511",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-C1513",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-C1515",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-C1521",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-U0126",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-P0AA6",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "DTC-C1A00",
+          "category": "dtcs",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "PARAM-K_ASSIST_GAIN",
+          "category": "parameters",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "PARAM-K_RETURN_GAIN",
+          "category": "parameters",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "PARAM-K_DAMP_HI",
+          "category": "parameters",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "PARAM-T_DERATE_ON",
+          "category": "parameters",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "PARAM-T_DERATE_OFF",
+          "category": "parameters",
+          "source_revision": "C"
+        },
+        {
+          "entry_id": "PARAM-V_ASSIST_MAX",
+          "category": "parameters",
+          "source_revision": "C"
+        }
+      ]
+    }
+  ],
+  "total_entries": 20,
+  "processing_history": [
+    {
+      "job_id": "JOB-D77FF233",
+      "filename": "eps_control_module_spec.pdf",
+      "timestamp": "2026-06-05T19:36:30.349916+00:00",
+      "new_entries": 20,
+      "updated_entries": 0,
+      "total_entries": 20
+    }
+  ]
+}
