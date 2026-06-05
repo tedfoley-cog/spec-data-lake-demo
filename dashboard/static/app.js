@@ -249,10 +249,12 @@ async function uploadFile(file) {
       setStatus("success", `${file.name} \u2014 Devin session launched to ingest it`);
     } else if (data.status === "success") {
       const cats = (data.job.categories || []).join(", ") || "no new categories";
+      const hint = data.fallback_error
+        ? `Devin session failed (${data.fallback_error}) \u2014 processed locally instead.`
+        : "Set the Devin + GitHub tokens to spawn a real session.";
       setStatus(
         "success",
-        `${file.name} processed locally (no Devin session) \u2014 ${cats}. ` +
-          "Set the Devin + GitHub tokens to spawn a real session.",
+        `${file.name} processed locally (no Devin session) \u2014 ${cats}. ${hint}`,
       );
     } else {
       setStatus("error", `Error: ${data.error || "processing failed"}`);
