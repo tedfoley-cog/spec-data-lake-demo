@@ -1,1 +1,129 @@
-{"data_lake_version":"1.0","created_at":"","documents":[],"total_entries":0,"processing_history":[]}
+{
+  "data_lake_version": "1.0",
+  "created_at": "",
+  "documents": [
+    {
+      "job_id": "JOB-C1F32E2D",
+      "filename": "bms_control_module_spec.pdf",
+      "processed_at": "2026-06-05T20:16:06.175407+00:00",
+      "categories": [
+        "signals",
+        "dtcs",
+        "parameters"
+      ],
+      "entries": [
+        {
+          "entry_id": "SIG-0x3C0-BMS_PackVoltage",
+          "category": "signals",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "SIG-0x3C0-BMS_PackCurrent",
+          "category": "signals",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "SIG-0x3C2-BMS_StateOfCharge",
+          "category": "signals",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "SIG-0x3C2-BMS_MaxCellTemp",
+          "category": "signals",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "SIG-0x3C4-BMS_MinCellVoltage",
+          "category": "signals",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "SIG-0x3C8-BMS_ContactorState",
+          "category": "signals",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "SIG-0x3C8-BMS_IsolationResistance",
+          "category": "signals",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "DTC-P0A80",
+          "category": "dtcs",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "DTC-P0AFA",
+          "category": "dtcs",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "DTC-P0A0D",
+          "category": "dtcs",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "DTC-P0AC0",
+          "category": "dtcs",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "DTC-P0A94",
+          "category": "dtcs",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "DTC-P0A1F",
+          "category": "dtcs",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "DTC-U029E",
+          "category": "dtcs",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "PARAM-K_SOC_RESERVE",
+          "category": "parameters",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "PARAM-V_CELL_MAX",
+          "category": "parameters",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "PARAM-V_CELL_MIN",
+          "category": "parameters",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "PARAM-T_CHG_MAX",
+          "category": "parameters",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "PARAM-I_CHG_MAX",
+          "category": "parameters",
+          "source_revision": "A"
+        },
+        {
+          "entry_id": "PARAM-T_PRECHG_TO",
+          "category": "parameters",
+          "source_revision": "A"
+        }
+      ]
+    }
+  ],
+  "total_entries": 20,
+  "processing_history": [
+    {
+      "job_id": "JOB-C1F32E2D",
+      "filename": "bms_control_module_spec.pdf",
+      "timestamp": "2026-06-05T20:16:06.175425+00:00",
+      "new_entries": 20,
+      "updated_entries": 0,
+      "total_entries": 20
+    }
+  ]
+}

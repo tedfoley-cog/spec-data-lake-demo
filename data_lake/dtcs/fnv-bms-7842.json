@@ -1,0 +1,113 @@
+{
+  "source_document": "FNV-BMS-7842",
+  "source_revision": "A",
+  "integrated_at": "2026-06-05T20:16:06.175114+00:00",
+  "entry_count": 7,
+  "entries": [
+    {
+      "entry_id": "DTC-P0A80",
+      "category": "dtcs",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "code": "P0A80",
+        "description": "Replace Hybrid Battery Pack",
+        "fault_action": "Limit power, warn",
+        "mil": "Yes",
+        "debounce_ms": 1000
+      },
+      "created_at": "2026-06-05T20:16:05.973524+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0AFA",
+      "category": "dtcs",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "code": "P0AFA",
+        "description": "Battery Pack Voltage Low",
+        "fault_action": "Open contactors",
+        "mil": "Yes",
+        "debounce_ms": 200
+      },
+      "created_at": "2026-06-05T20:16:05.973528+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0A0D",
+      "category": "dtcs",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "code": "P0A0D",
+        "description": "HV Interlock Circuit Open",
+        "fault_action": "Inhibit contactor close",
+        "mil": "Yes",
+        "debounce_ms": 50
+      },
+      "created_at": "2026-06-05T20:16:05.973531+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0AC0",
+      "category": "dtcs",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "code": "P0AC0",
+        "description": "Cell Over-Temperature",
+        "fault_action": "Force cooling, derate",
+        "mil": "No",
+        "debounce_ms": 1500
+      },
+      "created_at": "2026-06-05T20:16:05.973533+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0A94",
+      "category": "dtcs",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "code": "P0A94",
+        "description": "DC/DC Converter Performance",
+        "fault_action": "Derate aux loads",
+        "mil": "No",
+        "debounce_ms": 800
+      },
+      "created_at": "2026-06-05T20:16:05.973536+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0A1F",
+      "category": "dtcs",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "code": "P0A1F",
+        "description": "Battery Energy Control Module Fault",
+        "fault_action": "Safe-state, latch",
+        "mil": "Yes",
+        "debounce_ms": 100
+      },
+      "created_at": "2026-06-05T20:16:05.973539+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-U029E",
+      "category": "dtcs",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "code": "U029E",
+        "description": "Lost Comms with Cell Sense Module",
+        "fault_action": "Use last known values",
+        "mil": "Yes",
+        "debounce_ms": 400
+      },
+      "created_at": "2026-06-05T20:16:05.973542+00:00",
+      "version": 1
+    }
+  ]
+}
