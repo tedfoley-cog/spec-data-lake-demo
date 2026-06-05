@@ -1,7 +1,7 @@
 {
   "source_document": "ES-PCM-2024-001",
   "source_revision": "C",
-  "integrated_at": "2026-06-05T19:51:21.214113+00:00",
+  "integrated_at": "2026-06-05T19:54:37.371264+00:00",
   "entry_count": 5,
   "entries": [
     {
@@ -15,7 +15,7 @@
         "enable_condition": "RUN+ENGINE, RPM = 0 for 5s",
         "mil": true
       },
-      "created_at": "2026-06-05T19:51:21.012880+00:00",
+      "created_at": "2026-06-05T19:54:37.170104+00:00",
       "version": 1
     },
     {
@@ -29,7 +29,7 @@
         "enable_condition": "Any mode, BATT_V < 9.0V for 30s",
         "mil": true
       },
-      "created_at": "2026-06-05T19:51:21.012883+00:00",
+      "created_at": "2026-06-05T19:54:37.170107+00:00",
       "version": 1
     },
     {
@@ -43,7 +43,7 @@
         "enable_condition": "Any mode, BATT_V > 16.0V for 10s",
         "mil": true
       },
-      "created_at": "2026-06-05T19:51:21.012885+00:00",
+      "created_at": "2026-06-05T19:54:37.170109+00:00",
       "version": 1
     },
     {
@@ -57,7 +57,7 @@
         "enable_condition": "Power-on self-test",
         "mil": true
       },
-      "created_at": "2026-06-05T19:51:21.012888+00:00",
+      "created_at": "2026-06-05T19:54:37.170111+00:00",
       "version": 1
     },
     {
@@ -71,7 +71,7 @@
         "enable_condition": "RUN or RUN+ENGINE, no msg for 1s",
         "mil": true
       },
-      "created_at": "2026-06-05T19:51:21.012890+00:00",
+      "created_at": "2026-06-05T19:54:37.170114+00:00",
       "version": 1
     }
   ]

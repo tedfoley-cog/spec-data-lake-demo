@@ -1,7 +1,7 @@
 {
   "source_document": "ES-PCM-2024-001",
   "source_revision": "C",
-  "integrated_at": "2026-06-05T19:51:21.213863+00:00",
+  "integrated_at": "2026-06-05T19:54:37.371032+00:00",
   "entry_count": 20,
   "entries": [
     {
@@ -16,7 +16,7 @@
         "description": "All vehicle systems disabled",
         "active_systems": []
       },
-      "created_at": "2026-06-05T19:51:21.012816+00:00",
+      "created_at": "2026-06-05T19:54:37.169869+00:00",
       "version": 1
     },
     {
@@ -35,7 +35,7 @@
           "12V outlets"
         ]
       },
-      "created_at": "2026-06-05T19:51:21.012819+00:00",
+      "created_at": "2026-06-05T19:54:37.169873+00:00",
       "version": 1
     },
     {
@@ -54,7 +54,7 @@
           "Gauges"
         ]
       },
-      "created_at": "2026-06-05T19:51:21.012822+00:00",
+      "created_at": "2026-06-05T19:54:37.169876+00:00",
       "version": 1
     },
     {
@@ -72,7 +72,7 @@
           "Ignition coils"
         ]
       },
-      "created_at": "2026-06-05T19:51:21.012824+00:00",
+      "created_at": "2026-06-05T19:54:37.169878+00:00",
       "version": 1
     },
     {
@@ -90,7 +90,7 @@
           "Transmission"
         ]
       },
-      "created_at": "2026-06-05T19:51:21.012827+00:00",
+      "created_at": "2026-06-05T19:54:37.169881+00:00",
       "version": 1
     },
     {
@@ -108,7 +108,7 @@
           "Fuel pump shutoff"
         ]
       },
-      "created_at": "2026-06-05T19:51:21.012830+00:00",
+      "created_at": "2026-06-05T19:54:37.169889+00:00",
       "version": 1
     },
     {
@@ -123,7 +123,7 @@
         "guard": "BATT_V > 9.0V",
         "category": "forward"
       },
-      "created_at": "2026-06-05T19:51:21.012833+00:00",
+      "created_at": "2026-06-05T19:54:37.169942+00:00",
       "version": 1
     },
     {
@@ -138,7 +138,7 @@
         "guard": "BATT_V > 10.5V",
         "category": "forward"
       },
-      "created_at": "2026-06-05T19:51:21.012836+00:00",
+      "created_at": "2026-06-05T19:54:37.169947+00:00",
       "version": 1
     },
     {
@@ -153,7 +153,7 @@
         "guard": "TRANS_RANGE = P/N, BRAKE = ON",
         "category": "forward"
       },
-      "created_at": "2026-06-05T19:51:21.012839+00:00",
+      "created_at": "2026-06-05T19:54:37.169950+00:00",
       "version": 1
     },
     {
@@ -169,7 +169,7 @@
         "timeout_ms": 10000,
         "category": "forward"
       },
-      "created_at": "2026-06-05T19:51:21.012842+00:00",
+      "created_at": "2026-06-05T19:54:37.169952+00:00",
       "version": 1
     },
     {
@@ -184,7 +184,7 @@
         "guard": "",
         "category": "reverse"
       },
-      "created_at": "2026-06-05T19:51:21.012851+00:00",
+      "created_at": "2026-06-05T19:54:37.169955+00:00",
       "version": 1
     },
     {
@@ -199,7 +199,7 @@
         "guard": "",
         "category": "reverse"
       },
-      "created_at": "2026-06-05T19:51:21.012853+00:00",
+      "created_at": "2026-06-05T19:54:37.169957+00:00",
       "version": 1
     },
     {
@@ -214,7 +214,7 @@
         "guard": "Direct shutdown",
         "category": "reverse"
       },
-      "created_at": "2026-06-05T19:51:21.012856+00:00",
+      "created_at": "2026-06-05T19:54:37.169960+00:00",
       "version": 1
     },
     {
@@ -229,7 +229,7 @@
         "guard": "Crank abort",
         "category": "reverse"
       },
-      "created_at": "2026-06-05T19:51:21.012858+00:00",
+      "created_at": "2026-06-05T19:54:37.169963+00:00",
       "version": 1
     },
     {
@@ -244,11 +244,11 @@
         "guard": "RPM < 200 for 2s",
         "category": "reverse"
       },
-      "created_at": "2026-06-05T19:51:21.012861+00:00",
+      "created_at": "2026-06-05T19:54:37.169965+00:00",
       "version": 1
     },
     {
-      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY",
+      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY-FAULT_CRITICAL_1",
       "category": "states",
       "source_document": "ES-PCM-2024-001",
       "source_revision": "C",
@@ -259,11 +259,11 @@
         "guard": "",
         "category": "emergency"
       },
-      "created_at": "2026-06-05T19:51:21.012864+00:00",
+      "created_at": "2026-06-05T19:54:37.170078+00:00",
       "version": 1
     },
     {
-      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY",
+      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY-OIL_PRESS_5_PSI",
       "category": "states",
       "source_document": "ES-PCM-2024-001",
       "source_revision": "C",
@@ -274,11 +274,11 @@
         "guard": "",
         "category": "emergency"
       },
-      "created_at": "2026-06-05T19:51:21.012866+00:00",
+      "created_at": "2026-06-05T19:54:37.170086+00:00",
       "version": 1
     },
     {
-      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY",
+      "entry_id": "TRANS-RUN_ENGINE-EMERGENCY-COOLANT_TEMP_120C",
       "category": "states",
       "source_document": "ES-PCM-2024-001",
       "source_revision": "C",
@@ -289,7 +289,7 @@
         "guard": "",
         "category": "emergency"
       },
-      "created_at": "2026-06-05T19:51:21.012869+00:00",
+      "created_at": "2026-06-05T19:54:37.170092+00:00",
       "version": 1
     },
     {
@@ -304,7 +304,7 @@
         "guard": "",
         "category": "emergency"
       },
-      "created_at": "2026-06-05T19:51:21.012872+00:00",
+      "created_at": "2026-06-05T19:54:37.170095+00:00",
       "version": 1
     },
     {
@@ -319,7 +319,7 @@
         "guard": "Manual reset required",
         "category": "emergency"
       },
-      "created_at": "2026-06-05T19:51:21.012874+00:00",
+      "created_at": "2026-06-05T19:54:37.170097+00:00",
       "version": 1
     }
   ]
