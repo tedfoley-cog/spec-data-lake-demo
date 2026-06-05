@@ -1,0 +1,113 @@
+{
+  "source_document": "FNV-EPS-4521",
+  "source_revision": "C",
+  "integrated_at": "2026-06-05T19:36:48.100988+00:00",
+  "entry_count": 7,
+  "entries": [
+    {
+      "entry_id": "DTC-C1511",
+      "category": "dtcs",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "code": "C1511",
+        "description": "Torque Sensor Signal Implausible",
+        "fault_action": "Disable assist, latch",
+        "mil": "Yes",
+        "debounce_ms": 200
+      },
+      "created_at": "2026-06-05T19:36:47.899157+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-C1513",
+      "category": "dtcs",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "code": "C1513",
+        "description": "Motor Phase U Open Circuit",
+        "fault_action": "Derate to 40%",
+        "mil": "Yes",
+        "debounce_ms": 500
+      },
+      "created_at": "2026-06-05T19:36:47.899160+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-C1515",
+      "category": "dtcs",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "code": "C1515",
+        "description": "Motor Over-Temperature",
+        "fault_action": "Thermal derate",
+        "mil": "No",
+        "debounce_ms": 1000
+      },
+      "created_at": "2026-06-05T19:36:47.899162+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-C1521",
+      "category": "dtcs",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "code": "C1521",
+        "description": "Steering Angle Sensor No Comms",
+        "fault_action": "Inhibit assist",
+        "mil": "Yes",
+        "debounce_ms": 300
+      },
+      "created_at": "2026-06-05T19:36:47.899165+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-U0126",
+      "category": "dtcs",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "code": "U0126",
+        "description": "Lost Comms with SAS Module",
+        "fault_action": "Use estimated angle",
+        "mil": "No",
+        "debounce_ms": 400
+      },
+      "created_at": "2026-06-05T19:36:47.899167+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-P0AA6",
+      "category": "dtcs",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "code": "P0AA6",
+        "description": "HV System Isolation Fault",
+        "fault_action": "Open contactors",
+        "mil": "Yes",
+        "debounce_ms": 100
+      },
+      "created_at": "2026-06-05T19:36:47.899170+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "DTC-C1A00",
+      "category": "dtcs",
+      "source_document": "FNV-EPS-4521",
+      "source_revision": "C",
+      "data": {
+        "code": "C1A00",
+        "description": "ECU Internal Watchdog Reset",
+        "fault_action": "Safe-state, reset",
+        "mil": "Yes",
+        "debounce_ms": 50
+      },
+      "created_at": "2026-06-05T19:36:47.899172+00:00",
+      "version": 1
+    }
+  ]
+}
