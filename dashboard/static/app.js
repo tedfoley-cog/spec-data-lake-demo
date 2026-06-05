@@ -249,7 +249,13 @@ async function uploadFile(file) {
       setStatus("success", `${file.name} \u2014 Devin session launched to ingest it`);
     } else if (data.status === "success") {
       const cats = (data.job.categories || []).join(", ") || "no new categories";
-      setStatus("success", `${file.name} integrated \u2014 ${cats}`);
+      const hint = data.fallback_error
+        ? `Devin session failed (${data.fallback_error}) \u2014 processed locally instead.`
+        : "Set the Devin + GitHub tokens to spawn a real session.";
+      setStatus(
+        "success",
+        `${file.name} processed locally (no Devin session) \u2014 ${cats}. ${hint}`,
+      );
     } else {
       setStatus("error", `Error: ${data.error || "processing failed"}`);
     }
@@ -286,7 +292,31 @@ window.addEventListener("scroll", () => {
   nav.classList.toggle("scrolled", window.scrollY > 4);
 }, { passive: true });
 
+/* ---------- Ingestion mode badge ---------- */
+async function renderMode() {
+  const el = document.getElementById("modeBadge");
+  if (!el) return;
+  try {
+    const cfg = await fetch("/api/config").then((r) => r.json());
+    if (cfg.authentic_mode) {
+      el.className = "nav-mode mode-authentic";
+      el.textContent = "Authentic \u00b7 Devin sessions";
+      el.title = "Dropped files spawn a real Devin session.";
+    } else {
+      el.className = "nav-mode mode-local";
+      el.textContent = "Local fallback";
+      el.title =
+        "Dropped files are processed in-process (no Devin session). Missing: " +
+        (cfg.missing_env || []).join(", ");
+    }
+    el.hidden = false;
+  } catch (e) {
+    el.hidden = true;
+  }
+}
+
 /* ---------- Init ---------- */
 injectIcons(document);
+renderMode();
 refresh();
 setInterval(refresh, 3000);

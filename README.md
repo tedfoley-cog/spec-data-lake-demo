@@ -130,6 +130,30 @@ pip install -e .
 uvicorn dashboard.app:app --port 5001 --reload
 ```
 
+### Ingestion mode: authentic Devin sessions vs. local fallback
+
+Dropping a file behaves differently depending on whether credentials are present
+in the environment running the dashboard. The nav bar shows which mode is active
+(**Authentic · Devin sessions** or **Local fallback**), and the mode is also
+logged at startup.
+
+- **Authentic mode** — a dropped file is committed to a branch and a **real Devin
+  session** is spawned to run the pipeline and commit structured entries back;
+  the dashboard then reflects them. This requires all three:
+
+  ```bash
+  export TEDDY_SERVICE_USER_TOKEN=...   # or DEVIN_API_TOKEN  — create the session
+  export TEDDY_ORG_ID=...               # or DEVIN_ORG_ID     — org-scoped v3 API
+  export TEDFOLEY_COG_REPO_PAT=...      # or GITHUB_TOKEN      — push the branch
+  uv run uvicorn dashboard.app:app --port 5001
+  ```
+
+- **Local fallback** — if any of the above are missing, the file is processed
+  **in-process** (no Devin session is created) so the app still works offline.
+  This is why a plain `localhost` run without the tokens won't spin up a session.
+
+You can confirm the active mode any time via `GET /api/config`.
+
 ### Using the dashboard
 
 - The data lake starts **empty**. Click **Process All Source Documents** (shown
@@ -143,6 +167,14 @@ uvicorn dashboard.app:app --port 5001 --reload
 
   ```bash
   uv run python scripts/generate_demo_pdf.py
+  ```
+- A second drop-in demo file (a different subsystem) lives at
+  `source_documents/demo/bms_control_module_spec.pdf` — a High-Voltage Battery
+  Management System spec (contactor state machine + DTC / CAN-signal / parameter
+  tables) that also ingests to **20 structured entries**. Regenerate it with:
+
+  ```bash
+  uv run python scripts/generate_demo_pdf_bms.py
   ```
 - Reset the lake to the empty "before" state at any time:
 
