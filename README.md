@@ -100,6 +100,67 @@ dashboard at `localhost:5001`, or a Devin session prompt.
 - Data lake browser (expandable categories with entry details)
 - Source document viewer with embedded engineering diagrams
 
+## Run the dashboard locally
+
+The dashboard is a FastAPI app. From a fresh clone it runs in two commands with
+[`uv`](https://docs.astral.sh/uv/) (recommended), or with plain `pip`.
+
+### Option A — `uv` (recommended)
+
+```bash
+git clone https://github.com/tedfoley-cog/spec-data-lake-demo.git
+cd spec-data-lake-demo
+
+uv sync                                  # create venv + install dependencies
+uv run uvicorn dashboard.app:app --port 5001 --reload
+```
+
+Then open **http://localhost:5001** in your browser.
+
+### Option B — `pip` / venv
+
+```bash
+git clone https://github.com/tedfoley-cog/spec-data-lake-demo.git
+cd spec-data-lake-demo
+
+python3 -m venv .venv
+source .venv/bin/activate                # Windows: .venv\Scripts\activate
+pip install -e .
+
+uvicorn dashboard.app:app --port 5001 --reload
+```
+
+### Using the dashboard
+
+- The data lake starts **empty**. Click **Process All Source Documents** (shown
+  when the lake is empty), or **drag & drop / choose a file** in the upload panel
+  to run a single document through the 6-stage pipeline and watch it populate.
+- A ready-to-use demo file lives at
+  `source_documents/demo/eps_control_module_spec.pdf` — a real PDF (cover page,
+  state-machine diagram, and DTC / CAN-signal / calibration tables). Drop it in
+  live and it is parsed with `pdfplumber` into **20 structured entries** across
+  Signals, DTCs, and Parameters. Regenerate it with:
+
+  ```bash
+  uv run python scripts/generate_demo_pdf.py
+  ```
+- Reset the lake to the empty "before" state at any time:
+
+  ```bash
+  rm -rf data_lake/*/  source_documents/uploads  && echo '{}' > dashboard/state.json
+  ```
+
+- Run the test suite and checks:
+
+  ```bash
+  uv run pytest -q          # 19 tests
+  uv run ruff check .       # lint
+  uv run mypy dashboard pipeline jira
+  ```
+
+> The dashboard updates live (polls every few seconds) — no page reload needed
+> while documents are processing.
+
 ## Repo layout
 
 ```
@@ -114,13 +175,15 @@ source_documents/
   excel/
     system_requirements.xlsx                  # Requirements matrix (13 reqs)
     test_parameters.xlsx                      # Calibration params (16 params)
+  demo/
+    eps_control_module_spec.pdf               # Live-upload demo PDF (real tables)
   word_docs/
     can_signal_catalog.md + .extracted.json    # 28 CAN signals
     diagnostic_dtc_matrix.md + .extracted.json # 10 DTCs
 
 pipeline/
   ingest.py      # Stage 1: File reception + metadata
-  extract.py     # Stage 2: Text, tables, diagram extraction
+  extract.py     # Stage 2: Text, tables, diagram extraction (PDF via pdfplumber)
   classify.py    # Stage 3: Category classification
   structure.py   # Stage 4: Data lake schema conversion
   validate.py    # Stage 5: Cross-reference validation

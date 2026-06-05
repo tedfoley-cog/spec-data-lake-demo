@@ -2,264 +2,147 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="3" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Automotive Spec Data Lake — Continuous Ingestion</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <title>Spec Data Lake</title>
+  <link rel="icon" href="/static/ford-logo.svg" />
+  <link rel="stylesheet" href="/static/style.css?v=3" />
 </head>
 <body>
-  <header>
-    <h1>Automotive Spec Data Lake</h1>
-    <p>Continuous ingestion of unstructured engineering specifications into structured, queryable data</p>
-    <div class="stats-bar">
-      <div class="stat">
-        <span class="stat-value">{{ completed_count }}</span>
-        <span class="stat-label">Documents Processed</span>
+  <!-- Sticky white nav (Ford pattern: white bg, logo left, status right) -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <img class="nav-logo" src="/static/ford-logo.svg" alt="Ford" />
+      <span class="nav-sep"></span>
+      <span class="nav-title">Spec Data Lake</span>
+      <span class="nav-spacer"></span>
+      <span class="nav-status"><span class="pulse"></span> Continuous</span>
+    </div>
+  </nav>
+
+  <!-- Dark hero with headline + inline stats -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>Engineering Specification Data Lake</h1>
+        <p>
+          Unstructured engineering documents are ingested automatically
+          and structured into a queryable data lake the moment they land.
+        </p>
       </div>
-      <div class="stat">
-        <span class="stat-value">{{ total_entries }}</span>
-        <span class="stat-label">Data Lake Entries</span>
-      </div>
-      <div class="stat">
-        <span class="stat-value">{{ total_categories }}</span>
-        <span class="stat-label">Categories</span>
-      </div>
-      <div class="stat">
-        <span class="stat-value status-active">● CONTINUOUS</span>
-        <span class="stat-label">Ingestion Status</span>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-val" id="m-docs">{{ completed_count }}</div>
+          <div class="hero-stat-label">Documents</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val" id="m-entries">{{ total_entries }}</div>
+          <div class="hero-stat-label">Entries</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val" id="m-cats">{{ total_categories }}</div>
+          <div class="hero-stat-label">Categories</div>
+        </div>
       </div>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <!-- Upload Section -->
-    <section class="panel upload-panel">
-      <h2>📄 Upload Document</h2>
-      <div class="upload-zone" id="dropZone">
-        <div class="upload-icon">📂</div>
-        <p>Drag &amp; drop a spec document here</p>
-        <p class="upload-hint">PDF, Excel (.xlsx), Word (.docx), or pre-extracted JSON</p>
-        <label class="upload-btn">
-          Choose File
-          <input type="file" id="fileInput" accept=".pdf,.xlsx,.docx,.json,.md" hidden />
-        </label>
+  <div class="wrap">
+    <!-- Upload -->
+    <section class="section">
+      <div class="section-head">
+        <h2><span data-ic="upload"></span> Upload a Document</h2>
       </div>
-      <div id="uploadStatus" class="upload-status" style="display:none"></div>
+      <div class="upload-card" id="dropZone">
+        <div class="upload-ic" data-ic="cloud"></div>
+        <h3>Drop a specification document here</h3>
+        <p class="hint">or click to browse your files</p>
+        <div class="upload-types">
+          <span>PDF</span><span>XLSX</span><span>DOCX</span><span>JSON</span>
+        </div>
+        <div class="upload-cta">
+          <label class="btn btn-blue">
+            Choose File
+            <input type="file" id="fileInput" accept=".pdf,.xlsx,.docx,.json,.md" hidden />
+          </label>
+        </div>
+      </div>
+      <div id="uploadStatus" class="upload-toast"></div>
     </section>
 
-    <!-- Source Documents Preview -->
-    <section class="panel source-panel">
-      <h2>📋 Source Documents</h2>
-      <p class="panel-subtitle">Unstructured specs with embedded diagrams, state machines, and tables</p>
-      <div class="source-grid">
+    <!-- Source documents -->
+    <section class="section">
+      <div class="section-head">
+        <h2><span data-ic="docs"></span> Source Documents</h2>
+        <p>Unstructured specs with embedded diagrams, state machines, and tables</p>
+      </div>
+      <div class="row row-auto">
         {% for doc in source_docs %}
-        <div class="source-card">
-          <div class="source-card-header">
-            <span class="doc-type">
-              {% if '.xlsx' in doc.filename %}📊 Excel{% elif 'dtc' in doc.filename or 'can' in doc.filename %}📝 Word{% else %}📄 PDF{% endif %}
-            </span>
-            {% if doc.document_id %}<span class="doc-id">{{ doc.document_id }}</span>{% endif %}
-          </div>
-          <div class="source-card-title">{{ doc.title }}</div>
+        <div class="card doc-card">
           {% if doc.diagrams %}
-          <div class="source-card-diagrams">
-            {% for diagram in doc.diagrams %}
-            <img src="/diagrams/{{ diagram | replace('diagrams/', '') }}" alt="Diagram" class="diagram-thumb" onclick="this.classList.toggle('expanded')" />
-            {% endfor %}
-          </div>
+          <img src="/diagrams/{{ doc.diagrams[0] | replace('diagrams/', '') }}" alt="Diagram" class="doc-thumb" onclick="this.classList.toggle('expanded')" />
           {% endif %}
-          <div class="source-card-meta">
-            {% if doc.revision %}<span>Rev {{ doc.revision }}</span>{% endif %}
-            {% if doc.tables %}<span>{{ doc.tables }} tables</span>{% endif %}
-            {% if doc.diagrams %}<span>{{ doc.diagrams|length }} diagram{{ 's' if doc.diagrams|length > 1 }}</span>{% endif %}
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </section>
-
-    <!-- Active Pipeline -->
-    {% if state.active_jobs %}
-    <section class="panel pipeline-panel">
-      <h2>⚙️ Active Pipeline</h2>
-      {% for job_id, job in state.active_jobs.items() %}
-      <div class="pipeline-job">
-        <div class="pipeline-job-header">
-          <span class="job-id">{{ job.job_id }}</span>
-          <span class="job-file">{{ job.filename }}</span>
-          <span class="job-stage stage-{{ job.current_stage }}">{{ job.current_stage }}</span>
-        </div>
-        <div class="pipeline-stages">
-          {% set stages = ['received', 'extracting', 'classifying', 'structuring', 'validating', 'integrated'] %}
-          {% set stage_labels = {'received': 'Received', 'extracting': 'Extracting', 'classifying': 'Classifying', 'structuring': 'Structuring', 'validating': 'Validating', 'integrated': 'Integrated'} %}
-          {% for stage in stages %}
-          {% set is_done = stages.index(job.current_stage) >= stages.index(stage) if job.current_stage in stages else false %}
-          {% set is_active = job.current_stage == stage %}
-          <div class="pipeline-stage {% if is_done %}stage-done{% endif %} {% if is_active %}stage-active{% endif %}">
-            <div class="stage-dot"></div>
-            <div class="stage-label">{{ stage_labels[stage] }}</div>
-          </div>
-          {% if not loop.last %}<div class="stage-connector {% if is_done %}connector-done{% endif %}"></div>{% endif %}
-          {% endfor %}
-        </div>
-        {% if job.events %}
-        <div class="pipeline-events">
-          {% for event in job.events[-3:] %}
-          <div class="event">
-            <span class="event-time">{{ event.timestamp[:19] }}</span>
-            <span class="event-msg">{{ event.message }}</span>
-          </div>
-          {% endfor %}
-        </div>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </section>
-    {% endif %}
-
-    <!-- Processing History -->
-    {% if state.completed_jobs %}
-    <section class="panel history-panel">
-      <h2>📊 Processing History</h2>
-      <div class="history-timeline">
-        {% for job in state.completed_jobs | reverse %}
-        <div class="history-item">
-          <div class="history-dot"></div>
-          <div class="history-content">
-            <div class="history-header">
-              <span class="job-id">{{ job.job_id }}</span>
-              <span class="job-file">{{ job.filename }}</span>
-              <span class="job-stage stage-{{ job.current_stage }}">{{ job.current_stage }}</span>
+          <div class="card-body">
+            <div class="doc-header">
+              <span class="doc-type {% if '.xlsx' in doc.filename %}doc-type-xlsx{% elif 'dtc' in doc.filename or 'can' in doc.filename %}doc-type-docx{% else %}doc-type-pdf{% endif %}">
+                {% if '.xlsx' in doc.filename %}XLSX{% elif 'dtc' in doc.filename or 'can' in doc.filename %}DOCX{% else %}PDF{% endif %}
+              </span>
+              {% if doc.document_id %}<span class="doc-id">{{ doc.document_id }}</span>{% endif %}
             </div>
-            <div class="history-details">
-              <span>Categories: {{ job.categories | join(', ') }}</span>
-              {% if job.extracted_entities %}
-              <span>Entities: {{ job.extracted_entities.values() | sum }}</span>
-              {% endif %}
-              <span>Files: {{ job.data_lake_paths | length }}</span>
+            <div class="doc-title">{{ doc.title }}</div>
+            <div class="doc-meta">
+              {% if doc.revision %}<span>Rev {{ doc.revision }}</span>{% endif %}
+              {% if doc.tables %}<span>{{ doc.tables }} table{{ 's' if doc.tables != 1 }}</span>{% endif %}
+              {% if doc.diagrams %}<span>{{ doc.diagrams|length }} diagram{{ 's' if doc.diagrams|length != 1 }}</span>{% endif %}
             </div>
           </div>
         </div>
         {% endfor %}
       </div>
     </section>
-    {% endif %}
 
-    <!-- Data Lake Browser -->
-    <section class="panel datalake-panel">
-      <h2>🗄️ Structured Data Lake</h2>
-      <p class="panel-subtitle">Organized, queryable data extracted from unstructured specifications</p>
-      {% if data_lake %}
-      <div class="datalake-grid">
-        {% for category, files in data_lake.items() %}
-        <div class="datalake-category">
-          <div class="category-header" onclick="this.parentElement.classList.toggle('expanded')">
-            <span class="category-icon">
-              {% if category == 'signals' %}📡{% elif category == 'states' %}🔄{% elif category == 'requirements' %}📋{% elif category == 'dtcs' %}⚠️{% elif category == 'parameters' %}⚙️{% elif category == 'relationships' %}🔗{% else %}📁{% endif %}
-            </span>
-            <span class="category-name">{{ category | title }}</span>
-            <span class="category-count">{{ files | sum(attribute='entry_count') }} entries</span>
-            <span class="expand-arrow">▶</span>
-          </div>
-          <div class="category-body">
-            {% for file in files %}
-            <div class="datalake-file">
-              <div class="file-header">
-                <span class="file-name">{{ file.source_document }}</span>
-                <span class="file-entries">{{ file.entry_count }} entries</span>
-              </div>
-              <div class="file-entries-list">
-                {% for entry in file.entries[:5] %}
-                <div class="entry-row">
-                  <span class="entry-id">{{ entry.entry_id }}</span>
-                  <span class="entry-source">{{ entry.source_document }}</span>
-                </div>
-                {% endfor %}
-                {% if file.entries | length > 5 %}
-                <div class="entry-row more">... and {{ file.entries | length - 5 }} more</div>
-                {% endif %}
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% endfor %}
+    <!-- Devin ingestion sessions -->
+    <section class="section" id="sessionsSection" hidden>
+      <div class="section-head">
+        <h2><span data-ic="flow"></span> Devin Ingestion Sessions</h2>
+        <p>Each dropped document spins up a real Devin session that ingests it and commits structured entries to a branch</p>
       </div>
-      {% else %}
-      <div class="empty-state">
-        <p>Data lake is empty. Upload a document or click "Process All" to populate it.</p>
-        <button class="btn" onclick="processAll()">Process All Source Documents</button>
-      </div>
-      {% endif %}
+      <div id="sessions"></div>
     </section>
-  </main>
 
-  <footer>
-    <p>Automotive Spec Data Lake — Continuous ingestion powered by Devin</p>
+    <!-- Pipeline + History side-by-side -->
+    <section class="section">
+      <div class="row row-2">
+        <div>
+          <div class="section-head">
+            <h2><span data-ic="flow"></span> Active Pipeline</h2>
+            <p>6 stages: Ingest, Extract, Classify, Structure, Validate, Integrate</p>
+          </div>
+          <div id="activePipeline"></div>
+        </div>
+        <div>
+          <div class="section-head">
+            <h2><span data-ic="history"></span> Processing History</h2>
+          </div>
+          <div id="history"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data lake -->
+    <section class="section">
+      <div class="section-head">
+        <h2><span data-ic="lake"></span> Structured Data Lake</h2>
+        <p>Organized, queryable entities extracted from unstructured specifications</p>
+      </div>
+      <div id="dataLake"></div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <span>Spec Data Lake &mdash; continuous ingestion orchestrated by Devin</span>
+    <a href="https://github.com/tedfoley-cog/spec-data-lake-demo">github.com/tedfoley-cog/spec-data-lake-demo</a>
   </footer>
 
-  <script>
-    // File upload handling
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-    const uploadStatus = document.getElementById('uploadStatus');
-
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('drag-over');
-    });
-    dropZone.addEventListener('dragleave', () => {
-      dropZone.classList.remove('drag-over');
-    });
-    dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropZone.classList.remove('drag-over');
-      if (e.dataTransfer.files.length > 0) {
-        uploadFile(e.dataTransfer.files[0]);
-      }
-    });
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files.length > 0) {
-        uploadFile(fileInput.files[0]);
-      }
-    });
-
-    async function uploadFile(file) {
-      uploadStatus.style.display = 'block';
-      uploadStatus.className = 'upload-status uploading';
-      uploadStatus.textContent = `Uploading ${file.name}...`;
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      try {
-        const resp = await fetch('/upload', { method: 'POST', body: formData });
-        const data = await resp.json();
-        if (data.status === 'success') {
-          uploadStatus.className = 'upload-status success';
-          uploadStatus.textContent = `✓ ${file.name} processed — ${data.job.current_stage}`;
-          setTimeout(() => location.reload(), 1000);
-        } else {
-          uploadStatus.className = 'upload-status error';
-          uploadStatus.textContent = `✗ Error: ${data.error}`;
-        }
-      } catch (err) {
-        uploadStatus.className = 'upload-status error';
-        uploadStatus.textContent = `✗ Upload failed: ${err.message}`;
-      }
-    }
-
-    async function processAll() {
-      try {
-        const resp = await fetch('/api/process-all', { method: 'POST' });
-        const data = await resp.json();
-        if (data.status === 'success') {
-          location.reload();
-        }
-      } catch (err) {
-        alert('Processing failed: ' + err.message);
-      }
-    }
-  </script>
+  <script src="/static/app.js?v=3"></script>
 </body>
 </html>

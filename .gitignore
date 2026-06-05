@@ -12,3 +12,4 @@ build/
 .pytest_cache/
 data_lake/metadata/jira_activity.json
 source_documents/uploads/
+dashboard/sessions.json
