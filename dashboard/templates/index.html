@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spec Data Lake</title>
   <link rel="icon" href="/static/ford-logo.svg" />
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/style.css?v=2" />
 </head>
 <body>
   <!-- Sticky white nav (Ford pattern: white bg, logo left, status right) -->
@@ -100,6 +100,15 @@
       </div>
     </section>
 
+    <!-- Devin ingestion sessions -->
+    <section class="section" id="sessionsSection" hidden>
+      <div class="section-head">
+        <h2><span data-ic="flow"></span> Devin Ingestion Sessions</h2>
+        <p>Each dropped document spins up a real Devin session that ingests it and commits structured entries to a branch</p>
+      </div>
+      <div id="sessions"></div>
+    </section>
+
     <!-- Pipeline + History side-by-side -->
     <section class="section">
       <div class="row row-2">
@@ -134,6 +143,6 @@
     <a href="https://github.com/tedfoley-cog/spec-data-lake-demo">github.com/tedfoley-cog/spec-data-lake-demo</a>
   </footer>
 
-  <script src="/static/app.js"></script>
+  <script src="/static/app.js?v=2"></script>
 </body>
 </html>

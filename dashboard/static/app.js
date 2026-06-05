@@ -141,12 +141,56 @@ function renderLake(lake) {
   });
 }
 
+/* ---------- Devin sessions ---------- */
+function sessionStatusClass(status) {
+  const s = (status || "").toLowerCase();
+  if (s === "integrated" || s.includes("finish") || s.includes("complete")) return "done";
+  if (s.includes("blocked") || s.includes("fail") || s.includes("error") || s.includes("expired")) return "blocked";
+  return "running";
+}
+
+function renderSessions(sessions) {
+  const section = document.getElementById("sessionsSection");
+  const el = document.getElementById("sessions");
+  if (!sessions || !sessions.length) {
+    section.hidden = true;
+    el.innerHTML = "";
+    return;
+  }
+  section.hidden = false;
+  el.innerHTML = sessions.slice().reverse().map((s) => {
+    const cls = sessionStatusClass(s.status);
+    const statusLabel = cls === "done" ? "Integrated" : cls === "blocked" ? esc(s.status) : "Devin working\u2026";
+    const cats = (s.categories || []).map((c) => CAT_NAMES[c] || c).join(", ");
+    const link = s.url
+      ? `<a class="sess-link" href="${esc(s.url)}" target="_blank" rel="noopener">Open session ${ICONS.chevron}</a>`
+      : "";
+    const prLink = s.pr_url
+      ? `<a class="sess-link" href="${esc(s.pr_url)}" target="_blank" rel="noopener">View pull request ${ICONS.chevron}</a>`
+      : "";
+    return `<div class="sess-card">
+      <div class="sess-head">
+        <span class="sess-spinner ${cls}"></span>
+        <span class="sess-file">${esc(s.filename)}</span>
+        <span class="badge ${cls === "done" ? "integrated" : cls}">${statusLabel}</span>
+      </div>
+      <div class="sess-meta">
+        <span>Branch: <code>${esc(s.branch)}</code></span>
+        ${s.session_id ? `<span>Session: <code>${esc(s.session_id)}</code></span>` : ""}
+        ${s.entries_pulled ? `<span>Committed: <b>${s.entry_count}</b> entries${cats ? " \u2014 " + esc(cats) : ""}</span>` : ""}
+      </div>
+      <div class="sess-links">${link}${prLink}</div>
+    </div>`;
+  }).join("");
+}
+
 /* ---------- Polling ---------- */
 async function refresh() {
   try {
-    const [state, lake] = await Promise.all([
+    const [state, lake, sessions] = await Promise.all([
       fetch("/api/state").then((r) => r.json()),
       fetch("/api/data-lake").then((r) => r.json()),
+      fetch("/api/sessions").then((r) => r.json()).catch(() => ({ sessions: [] })),
     ]);
     const entries = Object.values(lake).reduce((a, files) => a + files.reduce((x, f) => x + (f.entry_count || 0), 0), 0);
     document.getElementById("m-docs").textContent = (state.completed_jobs || []).length;
@@ -154,6 +198,7 @@ async function refresh() {
     document.getElementById("m-cats").textContent = Object.keys(lake).length;
     renderActive(state);
     renderHistory(state);
+    renderSessions(sessions.sessions || []);
     renderLake(lake);
   } catch (e) { /* keep last good render */ }
 }
@@ -197,7 +242,10 @@ async function uploadFile(file) {
     const data = await resp.json();
     clearInterval(uploadTick);
     uploadTick = null;
-    if (data.status === "success") {
+    if (data.status === "session") {
+      document.getElementById("activePipeline").innerHTML = "";
+      setStatus("success", `${file.name} \u2014 Devin session launched to ingest it`);
+    } else if (data.status === "success") {
       const cats = (data.job.categories || []).join(", ") || "no new categories";
       setStatus("success", `${file.name} integrated \u2014 ${cats}`);
     } else {

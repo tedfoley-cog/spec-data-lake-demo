@@ -296,6 +296,31 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 .empty svg { color: var(--border); margin-bottom: 12px; }
 .empty p { color: var(--text-2); font-size: 14px; margin-bottom: 16px; max-width: 360px; margin-inline: auto; }
 
+/* ================ DEVIN SESSIONS ================ */
+#sessions { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.sess-card {
+  border: 1px solid var(--border); border-radius: var(--r);
+  padding: 18px 20px; background: var(--bg); box-shadow: var(--shadow-xs);
+}
+.sess-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.sess-file { font-weight: 700; color: var(--ink); font-size: 14px; flex: 1; word-break: break-all; }
+.badge.running { background: var(--bg-blue); color: var(--blue); border-color: #c8d9f0; }
+.badge.blocked { background: var(--red-bg); color: var(--red); border-color: #f0c7bf; }
+.sess-spinner {
+  width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+  border: 2px solid #c8d9f0; border-top-color: var(--blue);
+  animation: sess-spin .8s linear infinite;
+}
+.sess-spinner.done { border: none; background: var(--blue); animation: none; }
+.sess-spinner.blocked { border: none; background: var(--red); animation: none; }
+@keyframes sess-spin { to { transform: rotate(360deg); } }
+.sess-meta { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text-2); margin-bottom: 12px; }
+.sess-meta code { font-family: var(--mono); font-size: 11px; color: var(--text); background: var(--bg-alt); padding: 1px 6px; border-radius: 4px; }
+.sess-links { display: flex; gap: 18px; flex-wrap: wrap; }
+.sess-link { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--blue); text-decoration: none; }
+.sess-link:hover { text-decoration: underline; }
+.sess-link svg { width: 12px; height: 12px; }
+
 /* ================ FOOTER ================ */
 .footer {
   border-top: 1px solid var(--border); margin-top: 24px; padding: 24px 32px;
