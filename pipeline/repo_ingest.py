@@ -27,6 +27,16 @@ DEFAULT_REPO = os.environ.get("SPEC_DATA_LAKE_REPO", "tedfoley-cog/spec-data-lak
 DROP_DIR = "source_documents/dropped"
 
 
+def default_base() -> str:
+    """Branch to cut ingest branches from (and target PRs at).
+
+    Defaults to ``main``. Set ``INGEST_BASE_BRANCH`` to branch off a branch that
+    has the latest pipeline (e.g. before this work is merged to ``main``), so
+    spawned sessions clone the pipeline + CLI they need to ingest the document.
+    """
+    return os.environ.get("INGEST_BASE_BRANCH", "main")
+
+
 def github_token() -> str | None:
     """Return the configured GitHub token, if any."""
     return os.environ.get("TEDFOLEY_COG_REPO_PAT") or os.environ.get("GITHUB_TOKEN")
@@ -71,10 +81,11 @@ def push_dropped_file(
     content: bytes,
     branch: str,
     repo: str | None = None,
-    base: str = "main",
+    base: str | None = None,
 ) -> dict[str, Any]:
     """Create ``branch`` off ``base`` and commit the dropped file to it."""
     repo = repo or DEFAULT_REPO
+    base = base or default_base()
     dest_path = f"{DROP_DIR}/{filename}"
     with _client() as client:
         ref = client.get(f"/repos/{repo}/git/ref/heads/{base}")

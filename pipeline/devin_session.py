@@ -39,7 +39,9 @@ def sessions_enabled() -> bool:
     return bool(devin_token() and org_id())
 
 
-def build_ingest_prompt(filename: str, branch: str, file_path: str, repo: str) -> str:
+def build_ingest_prompt(
+    filename: str, branch: str, file_path: str, repo: str, base: str = "main"
+) -> str:
     """Build the prompt instructing a session to ingest one dropped document."""
     return (
         f"A new automotive engineering specification `{filename}` was just dropped into "
@@ -57,7 +59,7 @@ def build_ingest_prompt(filename: str, branch: str, file_path: str, repo: str) -
         f"4. Stage and commit ONLY the generated `data_lake/` files and "
         f"`dashboard/state.json` (commit message: `Ingest {filename} into data lake`) "
         f"and push to `{branch}`.\n"
-        f"5. Open a pull request from `{branch}` into `main` titled "
+        f"5. Open a pull request from `{branch}` into `{base}` titled "
         f"`Ingest {filename} into data lake`.\n\n"
         f"Do not modify any pipeline source code — keep the changes limited to the "
         f"data-lake outputs the pipeline produces."
@@ -69,6 +71,7 @@ def create_ingest_session(
     branch: str,
     file_path: str,
     repo: str | None = None,
+    base: str = "main",
 ) -> dict[str, Any]:
     """Create a Devin session to ingest ``file_path`` on ``branch``.
 
@@ -83,7 +86,7 @@ def create_ingest_session(
         )
     repo = repo or DEFAULT_REPO
     payload: dict[str, Any] = {
-        "prompt": build_ingest_prompt(filename, branch, file_path, repo),
+        "prompt": build_ingest_prompt(filename, branch, file_path, repo, base),
         "title": f"Ingest {filename} into data lake",
         "tags": ["spec-data-lake", "ingestion"],
     }

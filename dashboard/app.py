@@ -183,9 +183,10 @@ def _spawn_ingest_session(filename: str, content: bytes) -> dict[str, Any]:
     the pipeline and commits the structured entries back to the branch.
     """
     branch = repo_ingest.make_branch_name(filename)
-    pushed = repo_ingest.push_dropped_file(filename, content, branch)
+    base = repo_ingest.default_base()
+    pushed = repo_ingest.push_dropped_file(filename, content, branch, base=base)
     created = devin_session.create_ingest_session(
-        filename, branch, pushed["path"], repo=pushed["repo"]
+        filename, branch, pushed["path"], repo=pushed["repo"], base=base
     )
     session = {
         "session_id": created.get("session_id", ""),
