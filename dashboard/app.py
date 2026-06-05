@@ -303,6 +303,50 @@ def api_sessions() -> dict[str, Any]:
     return {"sessions": sessions}
 
 
+def ingestion_mode() -> dict[str, Any]:
+    """Report whether dropped files spawn real Devin sessions or run locally.
+
+    The authentic flow requires a Devin API token + org id (to create the
+    session) and a GitHub token (to push the dropped file to a branch). When any
+    are missing the dashboard silently falls back to in-process processing — this
+    surfaces exactly which env vars are missing so the fallback isn't a mystery.
+    """
+    missing: list[str] = []
+    if not devin_session.devin_token():
+        missing.append("DEVIN_API_TOKEN (or TEDDY_SERVICE_USER_TOKEN)")
+    if not devin_session.org_id():
+        missing.append("DEVIN_ORG_ID (or TEDDY_ORG_ID)")
+    if not repo_ingest.github_token():
+        missing.append("TEDFOLEY_COG_REPO_PAT (or GITHUB_TOKEN)")
+    authentic = devin_session.sessions_enabled() and repo_ingest.git_enabled()
+    return {"authentic_mode": authentic, "missing_env": missing}
+
+
+@app.get("/api/config")
+def api_config() -> dict[str, Any]:
+    """Expose the current ingestion mode so the UI can show it."""
+    return ingestion_mode()
+
+
+@app.on_event("startup")
+def _log_ingestion_mode() -> None:
+    mode = ingestion_mode()
+    if mode["authentic_mode"]:
+        print(
+            "[spec-data-lake] Ingestion mode: AUTHENTIC — dropped files spawn "
+            "real Devin sessions."
+        )
+    else:
+        print(
+            "[spec-data-lake] Ingestion mode: LOCAL FALLBACK — dropped files are "
+            "processed in-process (no Devin session is created)."
+        )
+        print(
+            "[spec-data-lake] To enable authentic Devin-session ingestion, set: "
+            + ", ".join(mode["missing_env"])
+        )
+
+
 @app.get("/api/state")
 def api_state() -> dict[str, Any]:
     """Get current pipeline state as JSON."""
