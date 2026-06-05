@@ -131,7 +131,10 @@ def read_data_lake_from_branch(
             for entry in listing.json():
                 if entry.get("type") != "file" or not entry["name"].endswith(".json"):
                     continue
-                blob = client.get(entry["url"])
+                blob = client.get(
+                    f"/repos/{repo}/contents/{entry['path']}",
+                    params={"ref": branch},
+                )
                 if blob.status_code != 200:
                     continue
                 payload = blob.json()
