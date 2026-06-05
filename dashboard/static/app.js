@@ -193,7 +193,9 @@ async function refresh() {
       fetch("/api/sessions").then((r) => r.json()).catch(() => ({ sessions: [] })),
     ]);
     const entries = Object.values(lake).reduce((a, files) => a + files.reduce((x, f) => x + (f.entry_count || 0), 0), 0);
-    document.getElementById("m-docs").textContent = (state.completed_jobs || []).length;
+    const docs = new Set();
+    Object.values(lake).forEach((files) => files.forEach((f) => { if (f.source_document) docs.add(f.source_document); }));
+    document.getElementById("m-docs").textContent = docs.size;
     document.getElementById("m-entries").textContent = entries;
     document.getElementById("m-cats").textContent = Object.keys(lake).length;
     renderActive(state);

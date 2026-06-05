@@ -162,7 +162,13 @@ def index(request: Request) -> HTMLResponse:
         for files in data_lake.values()
     )
     total_categories = len(data_lake)
-    completed_count = len(state.get("completed_jobs", []))
+    documents = {
+        f.get("source_document")
+        for files in data_lake.values()
+        for f in files
+        if f.get("source_document")
+    }
+    completed_count = len(documents)
 
     return TEMPLATES.TemplateResponse(
         request=request,
