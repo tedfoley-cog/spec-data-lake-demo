@@ -1,0 +1,104 @@
+{
+  "source_document": "FNV-BMS-7842",
+  "source_revision": "A",
+  "integrated_at": "2026-06-05T20:16:06.175258+00:00",
+  "entry_count": 6,
+  "entries": [
+    {
+      "entry_id": "PARAM-K_SOC_RESERVE",
+      "category": "parameters",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "Parameter ID": "K_SOC_RESERVE",
+        "Name": "Usable SOC Reserve",
+        "Min": "2",
+        "Max": "15",
+        "Default": "5",
+        "Unit": "%"
+      },
+      "created_at": "2026-06-05T20:16:05.973551+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-V_CELL_MAX",
+      "category": "parameters",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "Parameter ID": "V_CELL_MAX",
+        "Name": "Max Cell Voltage",
+        "Min": "4.0",
+        "Max": "4.25",
+        "Default": "4.2",
+        "Unit": "V"
+      },
+      "created_at": "2026-06-05T20:16:05.973556+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-V_CELL_MIN",
+      "category": "parameters",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "Parameter ID": "V_CELL_MIN",
+        "Name": "Min Cell Voltage",
+        "Min": "2.5",
+        "Max": "3.2",
+        "Default": "3.0",
+        "Unit": "V"
+      },
+      "created_at": "2026-06-05T20:16:05.973559+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-T_CHG_MAX",
+      "category": "parameters",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "Parameter ID": "T_CHG_MAX",
+        "Name": "Max Charge Temperature",
+        "Min": "40",
+        "Max": "60",
+        "Default": "50",
+        "Unit": "degC"
+      },
+      "created_at": "2026-06-05T20:16:05.973562+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-I_CHG_MAX",
+      "category": "parameters",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "Parameter ID": "I_CHG_MAX",
+        "Name": "Max Charge Current",
+        "Min": "50",
+        "Max": "250",
+        "Default": "200",
+        "Unit": "A"
+      },
+      "created_at": "2026-06-05T20:16:05.973564+00:00",
+      "version": 1
+    },
+    {
+      "entry_id": "PARAM-T_PRECHG_TO",
+      "category": "parameters",
+      "source_document": "FNV-BMS-7842",
+      "source_revision": "A",
+      "data": {
+        "Parameter ID": "T_PRECHG_TO",
+        "Name": "Precharge Timeout",
+        "Min": "100",
+        "Max": "800",
+        "Default": "400",
+        "Unit": "ms"
+      },
+      "created_at": "2026-06-05T20:16:05.973567+00:00",
+      "version": 1
+    }
+  ]
+}

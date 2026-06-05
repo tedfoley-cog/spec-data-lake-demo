@@ -1,1 +1,126 @@
-{"active_jobs":{},"completed_jobs":[],"data_lake_summary":{}}
+{
+  "active_jobs": {},
+  "completed_jobs": [
+    {
+      "job_id": "JOB-C1F32E2D",
+      "filename": "bms_control_module_spec.pdf",
+      "file_size": 6262,
+      "file_type": "pdf_document",
+      "current_stage": "integrated",
+      "events": [
+        {
+          "stage": "received",
+          "timestamp": "2026-06-05T20:16:05.359201+00:00",
+          "message": "File received: bms_control_module_spec.pdf (6,262 bytes, type: pdf_document)",
+          "details": {}
+        },
+        {
+          "stage": "extracting",
+          "timestamp": "2026-06-05T20:16:05.459775+00:00",
+          "message": "Extracting content from bms_control_module_spec.pdf",
+          "details": {}
+        },
+        {
+          "stage": "extracting",
+          "timestamp": "2026-06-05T20:16:05.772178+00:00",
+          "message": "Extracted 20 entities, 3 tables, 1 diagrams",
+          "details": {}
+        },
+        {
+          "stage": "classifying",
+          "timestamp": "2026-06-05T20:16:05.872755+00:00",
+          "message": "Analyzing content for category classification",
+          "details": {}
+        },
+        {
+          "stage": "classifying",
+          "timestamp": "2026-06-05T20:16:05.872909+00:00",
+          "message": "Classified into 3 categories: signals, dtcs, parameters",
+          "details": {}
+        },
+        {
+          "stage": "structuring",
+          "timestamp": "2026-06-05T20:16:05.973456+00:00",
+          "message": "Converting to data lake schema",
+          "details": {}
+        },
+        {
+          "stage": "structuring",
+          "timestamp": "2026-06-05T20:16:05.973598+00:00",
+          "message": "Structured 20 entries across 3 categories",
+          "details": {}
+        },
+        {
+          "stage": "validating",
+          "timestamp": "2026-06-05T20:16:06.074143+00:00",
+          "message": "Validating 20 entries against data lake",
+          "details": {}
+        },
+        {
+          "stage": "validating",
+          "timestamp": "2026-06-05T20:16:06.074289+00:00",
+          "message": "Validation complete: 20 new, 0 updates, 0 unchanged",
+          "details": {}
+        },
+        {
+          "stage": "integrated",
+          "timestamp": "2026-06-05T20:16:06.174764+00:00",
+          "message": "Integrating 20 entries into data lake",
+          "details": {}
+        },
+        {
+          "stage": "integrated",
+          "timestamp": "2026-06-05T20:16:06.175682+00:00",
+          "message": "Integrated into data lake: 3 files written",
+          "details": {}
+        }
+      ],
+      "extracted_entities": {
+        "signals": 7,
+        "dtcs": 7,
+        "parameters": 6
+      },
+      "categories": [
+        "signals",
+        "dtcs",
+        "parameters"
+      ],
+      "data_lake_paths": [
+        "data_lake/signals/fnv-bms-7842.json",
+        "data_lake/dtcs/fnv-bms-7842.json",
+        "data_lake/parameters/fnv-bms-7842.json"
+      ],
+      "error": ""
+    }
+  ],
+  "data_lake_summary": {
+    "categories": {
+      "dtcs": {
+        "files": 1,
+        "entries": 7
+      },
+      "parameters": {
+        "files": 1,
+        "entries": 6
+      },
+      "relationships": {
+        "files": 0,
+        "entries": 0
+      },
+      "requirements": {
+        "files": 0,
+        "entries": 0
+      },
+      "signals": {
+        "files": 1,
+        "entries": 7
+      },
+      "states": {
+        "files": 0,
+        "entries": 0
+      }
+    },
+    "total_files": 3,
+    "total_entries": 20
+  }
+}
