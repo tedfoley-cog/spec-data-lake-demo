@@ -1,1 +1,126 @@
-{"active_jobs":{},"completed_jobs":[],"data_lake_summary":{}}
+{
+  "active_jobs": {},
+  "completed_jobs": [
+    {
+      "job_id": "JOB-B26F323B",
+      "filename": "eps_control_module_spec.pdf",
+      "file_size": 6140,
+      "file_type": "pdf_document",
+      "current_stage": "integrated",
+      "events": [
+        {
+          "stage": "received",
+          "timestamp": "2026-06-05T19:36:09.563018+00:00",
+          "message": "File received: eps_control_module_spec.pdf (6,140 bytes, type: pdf_document)",
+          "details": {}
+        },
+        {
+          "stage": "extracting",
+          "timestamp": "2026-06-05T19:36:09.663585+00:00",
+          "message": "Extracting content from eps_control_module_spec.pdf",
+          "details": {}
+        },
+        {
+          "stage": "extracting",
+          "timestamp": "2026-06-05T19:36:09.970966+00:00",
+          "message": "Extracted 20 entities, 3 tables, 1 diagrams",
+          "details": {}
+        },
+        {
+          "stage": "classifying",
+          "timestamp": "2026-06-05T19:36:10.071500+00:00",
+          "message": "Analyzing content for category classification",
+          "details": {}
+        },
+        {
+          "stage": "classifying",
+          "timestamp": "2026-06-05T19:36:10.071655+00:00",
+          "message": "Classified into 3 categories: signals, dtcs, parameters",
+          "details": {}
+        },
+        {
+          "stage": "structuring",
+          "timestamp": "2026-06-05T19:36:10.172355+00:00",
+          "message": "Converting to data lake schema",
+          "details": {}
+        },
+        {
+          "stage": "structuring",
+          "timestamp": "2026-06-05T19:36:10.172495+00:00",
+          "message": "Structured 20 entries across 3 categories",
+          "details": {}
+        },
+        {
+          "stage": "validating",
+          "timestamp": "2026-06-05T19:36:10.273132+00:00",
+          "message": "Validating 20 entries against data lake",
+          "details": {}
+        },
+        {
+          "stage": "validating",
+          "timestamp": "2026-06-05T19:36:10.273329+00:00",
+          "message": "Validation complete: 20 new, 0 updates, 0 unchanged",
+          "details": {}
+        },
+        {
+          "stage": "integrated",
+          "timestamp": "2026-06-05T19:36:10.373912+00:00",
+          "message": "Integrating 20 entries into data lake",
+          "details": {}
+        },
+        {
+          "stage": "integrated",
+          "timestamp": "2026-06-05T19:36:10.374730+00:00",
+          "message": "Integrated into data lake: 3 files written",
+          "details": {}
+        }
+      ],
+      "extracted_entities": {
+        "signals": 7,
+        "dtcs": 7,
+        "parameters": 6
+      },
+      "categories": [
+        "signals",
+        "dtcs",
+        "parameters"
+      ],
+      "data_lake_paths": [
+        "data_lake/signals/fnv-eps-4521.json",
+        "data_lake/dtcs/fnv-eps-4521.json",
+        "data_lake/parameters/fnv-eps-4521.json"
+      ],
+      "error": ""
+    }
+  ],
+  "data_lake_summary": {
+    "categories": {
+      "dtcs": {
+        "files": 1,
+        "entries": 7
+      },
+      "parameters": {
+        "files": 1,
+        "entries": 6
+      },
+      "relationships": {
+        "files": 0,
+        "entries": 0
+      },
+      "requirements": {
+        "files": 0,
+        "entries": 0
+      },
+      "signals": {
+        "files": 1,
+        "entries": 7
+      },
+      "states": {
+        "files": 0,
+        "entries": 0
+      }
+    },
+    "total_files": 3,
+    "total_entries": 20
+  }
+}
